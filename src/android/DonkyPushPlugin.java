@@ -1,11 +1,14 @@
 
 package cordova.plugin;
 
+import android.app.Activity;
+import android.app.Application;
 import android.util.Log;
 
 import net.donky.core.DonkyException;
 import net.donky.core.DonkyListener;
 import net.donky.core.messaging.push.logic.DonkyPushLogic;
+import net.donky.core.messaging.push.ui.DonkyPushUI;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -48,7 +51,7 @@ public class DonkyPushPlugin extends CordovaPlugin {
         Log.d(TAG, "action: ".concat(action));
         try {
             if(action.equals("init")) {
-                this.init();
+                this.init(args);
             }else {
                 handleError("Invalid action");
                 result = false;
@@ -64,20 +67,38 @@ public class DonkyPushPlugin extends CordovaPlugin {
      * Initialises the Donky Push SDK
      * @throws Exception
      */
-    protected void init(){
+    protected void init(JSONArray args) throws JSONException {
 
-        DonkyPushLogic.initialiseDonkyPush(this.cordova.getActivity().getApplication(),
-                new DonkyListener() {
-                    @Override
-                    public void success() {
-                        handleDonkySuccessCallback("success initialising Donky Push SDK");
-                    }
+        boolean usePushUI = args.getBoolean(0);
+        final Application application = this.cordova.getActivity().getApplication();
 
-                    @Override
-                    public void error(DonkyException donkyException, Map<String, String> validationErrors) {
-                        handleDonkyErrorCallback("failed to initialise Donky Push SDK", donkyException, validationErrors);
-                    }
-                });
+        if(usePushUI){
+            DonkyPushUI.initialiseDonkyPush(application,
+                    new DonkyListener() {
+                        @Override
+                        public void success() {
+                            handleDonkySuccessCallback("success initialising Donky Push UI/Logic");
+                        }
+
+                        @Override
+                        public void error(DonkyException donkyException, Map<String, String> validationErrors) {
+                            handleDonkyErrorCallback("failed to initialise Donky Push UI/Logic", donkyException, validationErrors);
+                        }
+                    });
+        }else{
+            DonkyPushLogic.initialiseDonkyPush(application,
+                    new DonkyListener() {
+                        @Override
+                        public void success() {
+                            handleDonkySuccessCallback("success initialising Donky Push Logic");
+                        }
+
+                        @Override
+                        public void error(DonkyException donkyException, Map<String, String> validationErrors) {
+                            handleDonkyErrorCallback("failed to initialise Donky Push Logic", donkyException, validationErrors);
+                        }
+                    });
+        }
     }
 
     /**
