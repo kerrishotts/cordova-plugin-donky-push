@@ -38,6 +38,11 @@
     <source-file src='src/ios/DonkyPushPlugin.m'/>
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+      <array>
+        <string>remote-notification</string>
+      </array>
+    </config-file>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPConstants.h' autogen='true'/>
