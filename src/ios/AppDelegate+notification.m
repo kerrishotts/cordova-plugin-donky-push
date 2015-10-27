@@ -18,7 +18,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-    NSLog(@"didReceiveRemoteNotification");
+    NSLog(@"didReceiveRemoteNotification with userInfo: %@", userInfo);
     [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:nil completionHandler:^(NSString *string) {
         completionHandler(UIBackgroundFetchResultNewData);
     }];
@@ -28,7 +28,7 @@
 //For interactive notification only
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 {
-    NSLog(@"handleActionWithIdentifier");
+    NSLog(@"handleActionWithIdentifier with userInfo: %@", userInfo);
     [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *string) {
         completionHandler();
     }];
