@@ -13,7 +13,7 @@ NSLog((@"DonkyPushPlugin: " fmt), ##__VA_ARGS__); \
 /*
  * API
  */
-/*- (void) init:(CDVInvokedUrlCommand*)command;
+- (void) init:(CDVInvokedUrlCommand*)command;
 {
     self.cordova_command = command;
     
@@ -34,7 +34,7 @@ NSLog((@"DonkyPushPlugin: " fmt), ##__VA_ARGS__); \
     @catch (NSException *exception) {
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];
     }
-}*/
+}
 
 /*
  * Internals

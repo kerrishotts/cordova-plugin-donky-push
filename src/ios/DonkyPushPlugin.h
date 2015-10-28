@@ -16,6 +16,6 @@
 @property (nonatomic, strong) DPPushNotificationController* pushNotificationController;
 @property (nonatomic, strong) DPUINotificationController* pushUINotificationController;
 
-//- (void) init:(CDVInvokedUrlCommand*)command;
+- (void) init:(CDVInvokedUrlCommand*)command;
 
 @end

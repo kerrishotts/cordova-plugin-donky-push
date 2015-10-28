@@ -8,7 +8,7 @@ var DonkyCore = (function(){
 
     DonkyCore._notificationTypeCallbacks = {};
 
-    /*DonkyCore.init = function(success, error, apiKey, userDetails, deviceDetails, appVersion) {
+    DonkyCore.init = function(success, error, apiKey, userDetails, deviceDetails, appVersion) {
         if(userDetails){
             userDetails = JSON.stringify(userDetails);
         }
@@ -16,7 +16,7 @@ var DonkyCore = (function(){
             deviceDetails = JSON.stringify(deviceDetails);
         }
         return cordova.exec(success, error, 'DonkyCorePlugin', 'init', [apiKey, userDetails, deviceDetails, appVersion]);
-    };*/
+    };
 
     DonkyCore.updateUserDetails = function(success, error, userDetails) {
         return cordova.exec(success, error, 'DonkyCorePlugin', 'updateUserDetails', [JSON.stringify(userDetails)]);

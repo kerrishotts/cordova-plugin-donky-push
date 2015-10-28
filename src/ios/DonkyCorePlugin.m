@@ -18,6 +18,61 @@ NSLog((@"DonkyCorePlugin: " fmt), ##__VA_ARGS__); \
 @synthesize moduleDefinition;
 
 
+/*
+ * API
+ */
+- (void) init:(CDVInvokedUrlCommand*)command;
+{
+    self.cordova_command = command;
+    DNUserDetails* userDetails = nil;
+    DNDeviceDetails* deviceDetails = nil;
+    
+    @try {
+        NSString* apiKey = [command.arguments objectAtIndex:0];
+        NSString* jUserDetails = [command.arguments objectAtIndex:1];
+        NSString* jDeviceDetails = [command.arguments objectAtIndex:2];
+        
+        
+        if([apiKey isEqual:[NSNull null]]){
+            [NSException raise:@"API key not specified" format:@"API key not specified"];
+        }
+        
+        if(![jUserDetails isEqual:[NSNull null]]){
+            DLog(@"setting user details");
+            userDetails = [self getUserDetailsFromJson:jUserDetails];
+        }
+        
+        if(![jDeviceDetails isEqual:[NSNull null]]){
+            DLog(@"setting device details");
+            deviceDetails = [self getDeviceDetailsFromJson:jDeviceDetails];
+        }
+        
+        if(userDetails != nil && deviceDetails != nil){
+            DLog(@"init Donky with user and device details");
+            [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey userDetails:userDetails deviceDetails:deviceDetails success:^(NSURLSessionDataTask *task, id responseData) {
+                [self onInitSuccess];
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
+            }];
+        }else if(userDetails != nil){
+            DLog(@"init Donky with user details");
+            [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey userDetails:userDetails success:^(NSURLSessionDataTask *task, id responseData) {
+              [self onInitSuccess];
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+              [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
+            }];  
+        }else{
+            DLog(@"init Donky without details");
+            [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey];
+            [self onInitSuccess];
+        }
+
+    }
+    @catch (NSException *exception) {
+        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];
+    }
+}
+
 - (void) updateUserDetails:(CDVInvokedUrlCommand*)command;
 {
     self.cordova_command = command;
@@ -34,7 +89,7 @@ NSLog((@"DonkyCorePlugin: " fmt), ##__VA_ARGS__); \
         [DNAccountController updateUserDetails:userDetails success:^(NSURLSessionDataTask *task, id responseData) {
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
+          [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
         }];
     }
     @catch (NSException *exception) {
@@ -352,5 +407,4 @@ NSLog((@"DonkyCorePlugin: " fmt), ##__VA_ARGS__); \
         options:0 error:NULL];
     return jsonObject;
 }
-
 @end
