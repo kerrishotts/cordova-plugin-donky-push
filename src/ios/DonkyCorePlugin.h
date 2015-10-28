@@ -14,7 +14,7 @@
 @property (nonatomic,retain) CDVInvokedUrlCommand* cordova_command;
 @property (nonatomic,retain) DNModuleDefinition* moduleDefinition;
 
-- (void) init:(CDVInvokedUrlCommand*)command;
+//- (void) init:(CDVInvokedUrlCommand*)command;
 - (void) updateUserDetails:(CDVInvokedUrlCommand*)command;
 - (void) updateDeviceDetails:(CDVInvokedUrlCommand*)command;
 - (void) updateRegistrationDetails:(CDVInvokedUrlCommand*)command;

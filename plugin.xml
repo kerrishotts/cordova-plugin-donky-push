@@ -30,6 +30,12 @@
     <source-file src="src/android/DonkyCorePlugin.java" target-dir="src/cordova/plugin" />
     <hook type="after_prepare" src="scripts/android_app_name.js" />
 
+    <preference name="APP_NAME" value="my_api_key"/>
+
+    <config-file target="res/values/strings.xml" parent="/*">
+      <string name="donky_api_key">$API_KEY</string>
+    </config-file>
+
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <!-- PERMISSIONS FOR DONKY SDK -->
       <uses-permission android:name="android.permission.INTERNET" />
@@ -89,7 +95,8 @@
     <config-file target='AndroidManifest.xml' parent='/manifest/application'>
       <service android:name='net.donky.core.messaging.push.logic.PushLogicIntentService' android:exported='false'/>
     </config-file>
-    
+
+
     <framework src="net.donky:donky-core:2.2.0.2" />
     <framework src="net.donky:donky-module-analytics:2.2.0.2" />
     <framework src='net.donky:donky-module-push-logic:2.2.0.2'/>
@@ -107,6 +114,8 @@
     
     <source-file src='src/ios/DonkyPushPlugin.h'/>
     <source-file src='src/ios/DonkyPushPlugin.m'/>
+    <source-file src='src/ios/AppDelegate+Donky.h'/>
+    <source-file src='src/ios/AppDelegate+Donky.m'/>
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
     
