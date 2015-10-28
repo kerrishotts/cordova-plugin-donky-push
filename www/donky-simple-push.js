@@ -6,12 +6,12 @@ var DonkyPush = (function(){
      */
     var DonkyPush = {};
 
-    DonkyPush.init = function(success, error, usePushUI) {
+    /*DonkyPush.init = function(success, error, usePushUI) {
         if(typeof(usePushUI) === "undefined"){
             usePushUI = true;
         }
         return cordova.exec(success, error, 'DonkyPushPlugin', 'init', [usePushUI]);
-    };
+    };*/
 
     return DonkyPush;
 })();
