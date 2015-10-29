@@ -6,8 +6,6 @@
 
 @implementation AppDelegate (Donky)
 
-NSString* apiKey = @"JqUcc3JGT8ZLtZtWNG+3BSzt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnWVfg+uFoyVORPWcgK3CHUBvXCcvELg";
-
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -48,6 +46,8 @@ NSString* apiKey = @"JqUcc3JGT8ZLtZtWNG+3BSzt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnWVf
     [[DPUINotificationController sharedInstance] start];
     
     DNUserDetails* userDetails = [[DNUserDetails alloc] init];
+    
+    NSString* apiKey = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"DonkyApiKey"] objectAtIndex:0];
     
     NSLog(@"Start Donky Core with API key: %@", apiKey);
     [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey userDetails:userDetails success:^(NSURLSessionDataTask *task, id responseData) {
