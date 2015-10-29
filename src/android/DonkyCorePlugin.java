@@ -74,9 +74,7 @@ public class DonkyCorePlugin extends CordovaPlugin {
 
         Log.d(TAG, "action: ".concat(action));
         try {
-            if(action.equals("init")) {
-                this.init(args);
-            }else if(action.equals("updateUserDetails")) {
+            if(action.equals("updateUserDetails")) {
                 this.updateUserDetails(args);
             }else if(action.equals("updateDeviceDetails")) {
                 this.updateDeviceDetails(args);
@@ -101,66 +99,6 @@ public class DonkyCorePlugin extends CordovaPlugin {
             result = false;
         }
         return result;
-    }
-
-    /**
-     * Initialises the Donky Core SDK
-     * @param args JSONArray of arguments containing API key, device details and user details
-     * @throws Exception
-     */
-    protected void init(JSONArray args) throws Exception {
-        UserDetails userDetails = null;
-        DeviceDetails deviceDetails = null;
-
-        String apiKey = args.getString(0);
-        if(apiKey == "null"){
-            throw new Exception("API key not specified when calling init()");
-        }
-
-        String jsUserDetails = args.getString(1);
-        String jsDeviceDetails = args.getString(2);
-        String appVersion = args.getString(3);
-
-        if(jsUserDetails != "null"){
-            Log.d(TAG, "Setting user details");
-            userDetails = getUserDetailsFromJson(jsUserDetails);
-        }
-
-        if(jsDeviceDetails != "null") {
-            Log.d(TAG, "Setting device details");
-            deviceDetails = getDeviceDetailsFromJson(jsDeviceDetails);
-        }
-
-        DonkyAnalytics.initialiseAnalytics(this.cordova.getActivity().getApplication(),
-            new DonkyListener(){
-                @Override
-                public void success() {
-                    Log.d(TAG, "Analytics module initialised");
-                }
-
-                @Override
-                public void error(DonkyException donkyException, Map<String, String> validationErrors) {
-                    Log.e(TAG, "Failed to initialise analytics module");
-                }
-        });
-
-        DonkyCore.initialiseDonkySDK(this.cordova.getActivity().getApplication(),
-            apiKey,
-            userDetails,
-            deviceDetails,
-            appVersion,
-            new DonkyListener(){
-                @Override
-                public void success() {
-                    moduleDefinition = new ModuleDefinition(TAG, "1.0.0.0");
-                    handleDonkySuccessCallback("success initialising");
-                }
-
-                @Override
-                public void error(DonkyException donkyException, Map<String, String> validationErrors) {
-                    handleDonkyErrorCallback("failed to initialise", donkyException, validationErrors);
-                }
-        });
     }
 
     /**

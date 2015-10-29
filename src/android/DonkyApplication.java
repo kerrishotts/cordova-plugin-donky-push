@@ -1,7 +1,10 @@
 package cordova.plugin;
 
 import android.app.Application;
+import android.content.res.XmlResourceParser;
 import android.util.Log;
+
+import com.mobiledonky.example.push.R;
 
 import net.donky.core.DonkyCore;
 import net.donky.core.DonkyException;
@@ -9,13 +12,13 @@ import net.donky.core.DonkyListener;
 import net.donky.core.ModuleDefinition;
 import net.donky.core.analytics.DonkyAnalytics;
 import net.donky.core.messaging.push.ui.DonkyPushUI;
-
 import java.util.Map;
+
 
 public class DonkyApplication extends Application
 {
     public static final String TAG = "DonkyApplication";
-    public static final String API_KEY = "JqUcc3JGT8ZLtZtWNG+3BSzt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnWVfg+uFoyVORPWcgK3CHUBvXCcvELg";
+    public static final String CONFIG_PREFERENCE_NAME = "DONKY_API_KEY";
 
     protected ModuleDefinition moduleDefinition;
 
@@ -55,7 +58,7 @@ public class DonkyApplication extends Application
 
         // Init Core module
         DonkyCore.initialiseDonkySDK(this,
-            API_KEY,
+                this.readApiKey(),
             new DonkyListener(){
                 @Override
                 public void success() {
@@ -83,6 +86,35 @@ public class DonkyApplication extends Application
             message.concat("; validation errors: " + validationErrors.toString());
         }
         Log.e(TAG, message);
+    }
+
+    protected String readApiKey(){
+        String key = "";
+
+        try {
+            XmlResourceParser xrp = getResources().getXml(R.xml.config);
+            int eventType;
+            while((eventType = xrp.next()) != XmlResourceParser.END_DOCUMENT)
+            {
+                if (eventType == XmlResourceParser.START_TAG) {
+                    if(xrp.getName().equalsIgnoreCase("preference")
+                            && xrp.getAttributeValue(null, "name").equalsIgnoreCase(CONFIG_PREFERENCE_NAME)){
+                        key = xrp.getAttributeValue(null, "value");
+                        Log.d(TAG, "Found Donky API key in config.xml: "+key);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+
+        if(key == ""){
+            Log.e(TAG, "Donky API key not found in config.xml");
+        }
+
+        return key;
     }
 
 }

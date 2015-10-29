@@ -11,7 +11,7 @@
   <license>
      MIT 
   </license>
-  
+
   <js-module name='donky-simple-push' src='www/donky-simple-push.js'>
     <clobbers target='cordova.plugins.donky.push'/>
   </js-module>
@@ -79,13 +79,7 @@
               android:name="net.donky.core.DonkyIntentService"
               android:exported="false" />
     </config-file>
-  
-    <config-file target='config.xml' parent='/*'>
-      <feature name='DonkyPushPlugin'>
-        <param name='android-package' value='cordova.plugin.DonkyPushPlugin'/>
-      </feature>
-    </config-file>
-    <source-file src='src/android/DonkyPushPlugin.java' target-dir='src/cordova/plugin'/>
+
     <config-file target='AndroidManifest.xml' parent='/manifest/application'>
       <service android:name='net.donky.core.messaging.push.logic.PushLogicIntentService' android:exported='false'/>
     </config-file>
