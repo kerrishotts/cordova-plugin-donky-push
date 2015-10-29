@@ -1,15 +1,21 @@
 #!/usr/bin/env node
 module.exports = function(context) {
 
+  function log(msg){
+    if(context.opts.verbose) console.log(msg);
+  }
 
   function getProjectName(configXml){
     return configXml.match(/<name>([^<]+)</i)[1];
   }
 
-  var apiKeyPrefeferenceRegExp = /<preference name="DONKY_API_KEY" value="([^"]+)" \/>/;
+  log("Running ios_inject_api_key.js in context '"+context.hook+"'");
+
+  var apiKeyPreferenceRegExp = /<preference name="DONKY_API_KEY" value="([^"]+)" \/>/;
 
   var fs = context.requireCordovaModule('fs'),
-      path = context.requireCordovaModule('path');
+      path = context.requireCordovaModule('path'),
+      plist = context.requireCordovaModule('plist');
 
   var configXmlFile = path.resolve(context.opts.projectRoot, "config.xml");
 
@@ -22,12 +28,14 @@ module.exports = function(context) {
       throw new Error('Unable to read config.xml: ' + err);
     }
 
-    var matches = configXml.match(apiKeyPrefeferenceRegExp);
+    log("Read config.xml: "+configXmlFile);
+
+    var matches = configXml.match(apiKeyPreferenceRegExp);
     if (!matches) {
       throw new Error('API key preference not found in config.xml. Please add it in the form: <preference name="DONKY_API_KEY" value="{YOUR_API_KEY}" />');
     }
     var apiKey = matches[1];
-    var keyString = "\n      <string>"+apiKey+"</string>\n    ";
+    log("Found API Key: "+apiKey);
 
     var projectName = getProjectName(configXml);
 
@@ -41,13 +49,15 @@ module.exports = function(context) {
         throw new Error('Unable to read .plist: ' + err);
       }
 
-      var arrayRegExp = /<key>DonkyApiKey<\/key>[\s\S.]*<array>([\s\S.]*)<\/array>/;
-      var arrayRegExpMatches = plistXml.match(arrayRegExp);
-      plistXml = plistXml.replace(arrayRegExpMatches[0], arrayRegExpMatches[0].replace(arrayRegExpMatches[1], keyString));
+      log("Read .plist: "+plistFile);
+
+      var obj_plist = plist.parse(plistXml);
+      obj_plist["DonkyApiKey"] = [apiKey];
+      plistXml = plist.build(obj_plist);
 
       fs.writeFile(plistFile, plistXml, 'utf8', function (err) {
         if (err) throw new Error('Unable to write to .plist: ' + err);
-        if(context.opts.verbose) console.log("Successfully wrote Donky API key from config.xml to iOS .plist");
+        log("Successfully wrote Donky API key from config.xml to iOS .plist");
       })
     });
   });
