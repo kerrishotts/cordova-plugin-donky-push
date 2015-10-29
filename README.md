@@ -12,7 +12,7 @@ Currently supported platforms are: Android and iOS
 - Notifications will be received whether your app is currently running or not.
 - Both simple and interactive Push Notifications are supported.
 
-**Peer-to-peer Notifications **
+**Peer-to-peer Notifications**
 
 - Communicate peer-to-peer with other users on multiple platforms.
 - Example usages might be simple chat/messaging or a chess game where moves are sent across the Donky Network.
