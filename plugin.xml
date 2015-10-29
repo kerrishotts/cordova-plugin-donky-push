@@ -24,7 +24,7 @@
     </config-file>
     <source-file src="src/android/DonkyApplication.java" target-dir="src/cordova/plugin" />
     <source-file src="src/android/DonkyPlugin.java" target-dir="src/cordova/plugin" />
-    <hook type="after_prepare" src="scripts/android_app_name.js" />
+    <hook type="after_prepare" src="scripts/android/android_app_name.js" />
 
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <!-- PERMISSIONS FOR DONKY SDK -->
@@ -95,8 +95,8 @@
         <param name='ios-package' value='DonkyPlugin'/>
       </feature>
     </config-file>
-    <hook type="after_plugin_install" src="scripts/resolveDependencies.js"  />
-    <hook type="after_prepare" src="scripts/ios_inject_api_key.js" />
+    <hook type="after_plugin_install" src="scripts/ios/resolveDependencies.js"  />
+    <hook type="after_prepare" src="scripts/ios/ios_inject_api_key.js" />
     <source-file src='src/ios/DonkyPlugin.h'/>
     <source-file src='src/ios/DonkyPlugin.m'/>
     <source-file src='src/ios/AppDelegate+Donky.h'/>
