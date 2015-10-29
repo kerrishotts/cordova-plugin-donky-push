@@ -1,4 +1,4 @@
-#import "DonkyCorePlugin.h"
+#import "DonkyPlugin.h"
 #import "DNAccountController.h"
 #import "DNContentNotification.h"
 #import "DNNetworkController.h"
@@ -9,10 +9,10 @@
 BOOL debugEnabled = TRUE;
 #define DLog(fmt, ...) { \
 if (debugEnabled) \
-NSLog((@"DonkyCorePlugin: " fmt), ##__VA_ARGS__); \
+NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
 }
 
-@implementation DonkyCorePlugin
+@implementation DonkyPlugin
 
 @synthesize cordova_command;
 @synthesize moduleDefinition;
