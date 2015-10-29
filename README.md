@@ -86,15 +86,15 @@ Once the plugin is installed and setup with your API Key, there's nothing more y
 
 However, before you can start sending/receiving custom peer-to-peer notifications between users, details of the user and device must be registered with the Donky Network. You can do this using the `updateRegistrationDetails()` function:
 
-    cordova.plugins.donky.core.updateRegistrationDetails(success, error, userDetails, deviceDetails);
+    cordova.plugins.donky.updateRegistrationDetails(success, error, userDetails, deviceDetails);
 
 You can subscribe to receive notifications of a given type:
 
-    cordova.plugins.donky.core.subscribeToContentNotifications(success, error, "myMessageType", onReceiveMyMessage);
+    cordova.plugins.donky.subscribeToContentNotifications(success, error, "myMessageType", onReceiveMyMessage);
 
 You can send a notification of a specified type to a particular user which contains custom data:
 
-    cordova.plugins.donky.core.sendContentNotificationToUser(
+    cordova.plugins.donky.sendContentNotificationToUser(
         function(){
             console.log("Successfully sent");
         },function(error){
@@ -109,7 +109,7 @@ You can send a notification of a specified type to a particular user which conta
 
 Notifications can be queued for batch sending:
 
-    cordova.plugins.donky.core.sendContentNotificationToUser(
+    cordova.plugins.donky.sendContentNotificationToUser(
         function(){
             console.log("Successfully sent");
         },function(error){
@@ -125,7 +125,7 @@ Notifications can be queued for batch sending:
 
 Calling `synchronise()` will send any locally queued notifications and check for/receive pending remote notifications:
 
-    cordova.plugins.donky.core.synchronise(
+    cordova.plugins.donky.synchronise(
         function(){
             console.log("Successfully synchronised");
         },function(error){
