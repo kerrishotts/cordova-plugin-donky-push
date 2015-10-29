@@ -6,7 +6,7 @@ post_install do |installer|
   require './cocoapod-to-cordova'
 
   build = CocoapodToCordovaBuilder.new('UIView-Autolayout', installer.project)
-  build.root_path = File.expand_path(File.join('.', '../..'))
+  build.root_path = File.expand_path(File.join('.', '../../../..'))
   build.destination = 'src/ios/UIView-Autolayout'
   build.configure({
     preserve_config_xml: true
