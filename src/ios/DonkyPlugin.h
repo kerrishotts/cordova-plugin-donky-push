@@ -7,7 +7,7 @@
 #import "DNDonkyCore.h"
 #import "DNModuleDefinition.h"
 
-@interface DonkyCorePlugin :CDVPlugin {
+@interface DonkyPlugin :CDVPlugin {
     CDVInvokedUrlCommand* cordova_command;
     DNModuleDefinition* moduleDefinition;
 }

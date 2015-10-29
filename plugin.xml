@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?> 
 <plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-simple-push' version='1.0.0'>
   <name>
-     Donky Simple Push Notifications 
+     Donky Simple Push Notifications
   </name>
   <description>
      This plugin allows you to receive push and interactive push notifications,
@@ -12,22 +12,18 @@
      MIT 
   </license>
 
-  <js-module name='donky-simple-push' src='www/donky-simple-push.js'>
-    <clobbers target='cordova.plugins.donky.push'/>
-  </js-module>
-  
-  <js-module name='donky-core' src='www/donky-core.js'>
-      <clobbers target='cordova.plugins.donky.core'/>
+  <js-module name='donky-core' src='www/donky.js'>
+      <clobbers target='cordova.plugins.donky'/>
   </js-module>
   
   <platform name='android'>
     <config-file target="config.xml" parent="/*">
-          <feature name="DonkyCorePlugin" >
-            <param name="android-package" value="cordova.plugin.DonkyCorePlugin"/>
+          <feature name="DonkyPlugin" >
+            <param name="android-package" value="cordova.plugin.DonkyPlugin"/>
           </feature>
     </config-file>
     <source-file src="src/android/DonkyApplication.java" target-dir="src/cordova/plugin" />
-    <source-file src="src/android/DonkyCorePlugin.java" target-dir="src/cordova/plugin" />
+    <source-file src="src/android/DonkyPlugin.java" target-dir="src/cordova/plugin" />
     <hook type="after_prepare" src="scripts/android_app_name.js" />
 
     <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -95,17 +91,19 @@
   
   <platform name='ios'>
     <config-file target='config.xml' parent='/*'>
-      <feature name='DonkyPushPlugin'>
-        <param name='ios-package' value='DonkyPushPlugin'/>
+      <feature name='DonkyPlugin'>
+        <param name='ios-package' value='DonkyPlugin'/>
       </feature>
     </config-file>
-    
-    <source-file src='src/ios/DonkyPushPlugin.h'/>
-    <source-file src='src/ios/DonkyPushPlugin.m'/>
+    <source-file src='src/ios/DonkyPlugin.h'/>
+    <source-file src='src/ios/DonkyPlugin.m'/>
     <source-file src='src/ios/AppDelegate+Donky.h'/>
     <source-file src='src/ios/AppDelegate+Donky.m'/>
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
+
+    <resource-file src='src/ios/Localizable.strings' />
+    <source-file src='src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld'/> <!-- Must be copied manually as cocopods-to-cordova script doesn't copy it -->
     
     <config-file target="*-Info.plist" parent="UIBackgroundModes">
       <array>
@@ -113,16 +111,6 @@
       </array>
     </config-file>
     
-    <config-file target='config.xml' parent='/*'>
-      <feature name='DonkyCorePlugin'>
-        <param name='ios-package' value='DonkyCorePlugin'/>
-      </feature>
-    </config-file>
-    <source-file src='src/ios/DonkyCorePlugin.h'/>
-    <source-file src='src/ios/DonkyCorePlugin.m'/>
-    <resource-file src='src/ios/Localizable.strings' />
-    <source-file src='src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld'/> <!-- Must be copied manually as cocopods-to-cordova script doesn't copy it -->
-   
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPConstants.h' autogen='true'/>

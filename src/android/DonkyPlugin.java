@@ -43,8 +43,8 @@ import org.json.JSONObject;
 /**
  * Cordova Plugin that wraps the Donky Core SDK
  */
-public class DonkyCorePlugin extends CordovaPlugin {
-    public static final String TAG = "DonkyCorePlugin";
+public class DonkyPlugin extends CordovaPlugin {
+    public static final String TAG = "DonkyPlugin";
 
 
     /**
@@ -57,7 +57,7 @@ public class DonkyCorePlugin extends CordovaPlugin {
     /**
      * Constructor.
      */
-    public DonkyCorePlugin() {}
+    public DonkyPlugin() {}
 
 
     /**

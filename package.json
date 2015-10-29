@@ -1,8 +1,8 @@
 {
     "version": "1.0.0",
     "name": "cordova-plugin-donky-simple-push",
-    "cordova_name": "Donky Core",
-    "description": "This plugin allows you to receive push and interactive push notifications, feedback the analytics and optionally display them.. Powered by Donky (www.mobiledonky.com)",
+    "cordova_name": "Donky Simple Push",
+    "description": "This plugin allows you to receive push and interactive push notifications, feedback the analytics and optionally display them. Powered by Donky (www.mobiledonky.com)",
     "author": "Donky",
     "license": "MIT",
     "repository": {
