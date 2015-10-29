@@ -92,8 +92,6 @@ You can subscribe to receive notifications of a given type:
 
     cordova.plugins.donky.core.subscribeToContentNotifications(success, error, "myMessageType", onReceiveMyMessage);
 
-Note: It's best to subscribe for notifications before initialising the plugin, to avoid a race condition which may cause pending remote notifications not to be received.
-
 You can send a notification of a specified type to a particular user which contains custom data:
 
     cordova.plugins.donky.core.sendContentNotificationToUser(
