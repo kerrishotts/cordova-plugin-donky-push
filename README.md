@@ -23,6 +23,7 @@ Currently supported platforms are: Android and iOS
 * [Using the plugin](#using-the-plugin)
 * [Example project](#example-project)
 * [Updating the Donky SDK modules](#updating-the-donky-sdk-modules)
+* [Troubleshooting](https://github.com/Donky-Network/cordova-plugin-donky-simple-push/wiki/Troubleshooting)
 * [License](#license)
  
 # Installing
