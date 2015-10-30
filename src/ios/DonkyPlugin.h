@@ -14,7 +14,13 @@
 @property (nonatomic,retain) CDVInvokedUrlCommand* cordova_command;
 @property (nonatomic,retain) DNModuleDefinition* moduleDefinition;
 
-//- (void) init:(CDVInvokedUrlCommand*)command;
++ (UIWebView*) webView;
++ (bool) sdkInitialised;
++ (bool) cordovaInitialised;
+
++ (void) sdkIsReady;
+- (CDVPlugin*)xxx_initWithWebView:(UIWebView*)theWebView;
+
 - (void) updateUserDetails:(CDVInvokedUrlCommand*)command;
 - (void) updateDeviceDetails:(CDVInvokedUrlCommand*)command;
 - (void) updateRegistrationDetails:(CDVInvokedUrlCommand*)command;

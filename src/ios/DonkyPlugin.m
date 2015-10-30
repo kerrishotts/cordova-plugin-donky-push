@@ -4,6 +4,7 @@
 #import "DNNetworkController.h"
 #import "DNSubscription.h"
 #import "DNServerNotification.h"
+#import <objc/runtime.h>
 
 
 BOOL debugEnabled = TRUE;
@@ -17,6 +18,65 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
 @synthesize cordova_command;
 @synthesize moduleDefinition;
 
+static UIWebView* webView;
+
+static bool sdkInitialised = false;
+static bool cordovaInitialised = false;
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        Class class = [self class];
+        
+        SEL originalSelector = @selector(initWithWebView:);
+        SEL swizzledSelector = @selector(xxx_initWithWebView:);
+        
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        
+        BOOL didAddMethod = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+        
+        if (didAddMethod) {
+            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
+    });
+}
+
+- (CDVPlugin*)xxx_initWithWebView:(UIWebView*)theWebView
+{
+    NSLog(@"DonkyPlugin:initWithWebView");
+    CDVPlugin* this = [self xxx_initWithWebView:theWebView];
+    
+    cordovaInitialised = true;
+    webView = theWebView;
+    if(sdkInitialised){
+        NSLog(@"Donky SDK ready before Cordova");
+        NSString* jsString = [NSString stringWithFormat:@"alert('SDK ready before Cordova');"];
+        [webView stringByEvaluatingJavaScriptFromString:jsString];
+    }
+    return this;
+}
+
++ (void) sdkIsReady;
+{
+    NSLog(@"DonkyPlugin:sdkIsReady");
+    sdkInitialised = true;
+    if(cordovaInitialised){
+        NSLog(@"Donky SDK ready after Cordova");
+        NSString* jsString = [NSString stringWithFormat:@"alert('SDK ready after Cordova');"];
+        [webView stringByEvaluatingJavaScriptFromString:jsString];
+    }
+}
+
+- (void) notifySdkIsReady;
+{
+    NSLog(@"DonkyPlugin:notifySdkIsReady");
+    NSString* jsString = [NSString stringWithFormat:@"alert('SDK ready');"];
+    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+}
 
 - (void) updateUserDetails:(CDVInvokedUrlCommand*)command;
 {
@@ -32,8 +92,10 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
         DNUserDetails* userDetails = [self getUserDetailsFromJson:jUserDetails];
         
         [DNAccountController updateUserDetails:userDetails success:^(NSURLSessionDataTask *task, id responseData) {
+            DLog(@"Successfully updated user details");
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            DLog(@"Failed to update user details with error: %@", error.localizedDescription);
             [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
         }];
     }
@@ -56,8 +118,10 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
         DNDeviceDetails* deviceDetails = [self getDeviceDetailsFromJson:jDeviceDetails];
         
         [DNAccountController updateDeviceDetails:deviceDetails success:^(NSURLSessionDataTask *task, id responseData) {
+            DLog(@"Successfully updated device details");
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            DLog(@"Failed to update device details with error: %@", error.localizedDescription);
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
         }];
     }
@@ -85,8 +149,10 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
         DNDeviceDetails* deviceDetails = [self getDeviceDetailsFromJson:jDeviceDetails];
         
         [DNAccountController updateRegistrationDetails:userDetails deviceDetails:deviceDetails success:^(NSURLSessionDataTask *task, id responseData) {
+            DLog(@"Successfully updated registration details");
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            DLog(@"Failed to update registration details with error: %@", error.localizedDescription);
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
         }];
     }
@@ -114,8 +180,10 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
         DNDeviceDetails* deviceDetails = [self getDeviceDetailsFromJson:jDeviceDetails];
         
         [DNAccountController replaceRegistrationDetailsWithUserDetails:userDetails deviceDetails:deviceDetails success:^(NSURLSessionDataTask *task, id responseData) {
+            DLog(@"Successfully replaced registration details");
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            DLog(@"Failed to replace registration details with error: %@", error.localizedDescription);
           [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
         }];
     }
@@ -184,8 +252,10 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
     @try {
         DLog(@"Synchronising");
         [[DNNetworkController sharedInstance] synchroniseSuccess:^(NSURLSessionDataTask *task, id responseData) {
+            DLog(@"Successfully synchronised");
             [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            DLog(@"Failed to synchronise with error: %@", error.localizedDescription);
             [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
         }];
     }
@@ -243,8 +313,10 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
 - (void) sendContentNotification:(DNContentNotification*)contentNotification;
 {
     [[DNNetworkController sharedInstance] sendContentNotifications:@[contentNotification] success:^(NSURLSessionDataTask *task, id responseData) {
+        DLog(@"Successfully sent content notification");
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        DLog(@"Failed to send content notification with error: %@", error.localizedDescription);
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription]];
     }];
 }
@@ -252,6 +324,7 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
 - (void) queueContentNotification:(DNContentNotification*)contentNotification;
 {
     [[DNNetworkController sharedInstance] queueContentNotifications:@[contentNotification]];
+    DLog(@"Successfully queued content notification");
     [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
 }
 
@@ -312,6 +385,7 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
                    selectedTags:selectedTags
                    additionalProperties:additionalProperties
                    ];
+    
     return userDetails;
 }
 

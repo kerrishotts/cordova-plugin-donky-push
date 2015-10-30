@@ -3,6 +3,7 @@
 #import "DNDonkyCore.h"
 #import "DPUINotificationController.h"
 #import "DCAAnalyticsController.h"
+#import "DonkyPlugin.h"
 
 @implementation AppDelegate (Donky)
 
@@ -45,13 +46,13 @@
     NSLog(@"Start Donky push UI controller");
     [[DPUINotificationController sharedInstance] start];
     
-    DNUserDetails* userDetails = [[DNUserDetails alloc] init];
-    
     NSString* apiKey = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"DonkyApiKey"] objectAtIndex:0];
     
     NSLog(@"Start Donky Core with API key: %@", apiKey);
-    [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey userDetails:userDetails success:^(NSURLSessionDataTask *task, id responseData) {
+    
+    [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey succcess:^(NSURLSessionDataTask *task, id responseData) {
         NSLog(@"Donky Core initialisation complete");
+        [DonkyPlugin sdkIsReady];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Error initialising Donky Core: %@", error.localizedDescription);
     }];
