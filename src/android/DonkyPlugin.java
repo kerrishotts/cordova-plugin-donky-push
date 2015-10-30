@@ -313,7 +313,7 @@ public class DonkyPlugin extends CordovaPlugin {
     }
 
     private void jsNotificationCallback(String jsData, String notificationType){
-        String jsStatement = String.format("cordova.plugins.donky.core._notificationTypeCallbacks[\"%s\"](%s);", notificationType, jsData);
+        String jsStatement = String.format("cordova.plugins.donky._notificationTypeCallbacks[\"%s\"](%s);", notificationType, jsData);
         executeGlobalJavascript(jsStatement);
     }
 
