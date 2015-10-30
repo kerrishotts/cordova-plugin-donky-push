@@ -81,11 +81,23 @@ Additionally, you will need to enable Push Notifications and Remote Notification
 - Switch on "Push Notifications"
 - Switch on "Background Modes" and check the "Remote notifications" box
 
+### Wait for Donky initialisation
+The Donky SDK begins initialisation when your app first starts up. This happens in parallel with the initialisation of the Cordova Webview and is asynchronous because completion of the SDK initialisation depends on the results of remote network requests.
+
+Therefore, before your app starts performing its operations, you must first wait for both the Cordova Webview to be ready (signalled by the `"deviceready"` event) **and** for the Donky SDK to be ready (signalled by the `"donkyready"` event).
+
+The plugin provides a combined event `"deviceanddonkyready"`, which you can listen for in the same way as `"deviceready"`. When this event is fired, it means both Cordova and the Donky SDK are ready and your app can now start performing operations:
+
+    document.addEventListener("deviceanddonkyready", initMyApp, false);
+    function initMyApp(){
+        console.log("Both Cordova and Donky SDK are ready. My app can now start to do stuff.");
+    }
+
 ## Example usage
 
 Once the plugin is installed and setup with your API Key, there's nothing more you need to do to receive Push Notifications.
 
-However, before you can start sending/receiving custom peer-to-peer notifications between users, details of the user and device must be registered with the Donky Network. You can do this using the `updateRegistrationDetails()` function:
+Before you can start sending/receiving custom peer-to-peer notifications between users, details of the user and device must be registered with the Donky Network. You can do this using the `updateRegistrationDetails()` function:
 
     cordova.plugins.donky.updateRegistrationDetails(success, error, userDetails, deviceDetails);
 

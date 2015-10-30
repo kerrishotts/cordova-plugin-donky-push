@@ -5,6 +5,9 @@ var Donky = (function(){
      */
     var Donky = {};
 
+    Donky.deviceready = false;
+    Donky.donkyready = false;
+
     Donky._notificationTypeCallbacks = {};
 
     Donky.updateUserDetails = function(success, error, userDetails) {
@@ -59,6 +62,25 @@ var Donky = (function(){
 
         return cordova.exec(success, error, 'DonkyPlugin', 'subscribeToContentNotifications', [notificationType]);
     };
+
+    function checkAndDispatchDeviceAndDonkyReady(){
+        if(Donky.donkyready && Donky.deviceready){
+            document.dispatchEvent(new CustomEvent('deviceanddonkyready'));
+        }
+    }
+
+    document.donkyready = function(){
+        Donky.donkyready = true;
+        document.dispatchEvent(new CustomEvent('donkyready'));
+        checkAndDispatchDeviceAndDonkyReady();
+    };
+
+    document.addEventListener("deviceready", function(){
+        Donky.deviceready = true;
+        checkAndDispatchDeviceAndDonkyReady();
+    }, false);
+
+    cordova.exec(null, null, 'DonkyPlugin', 'init', []);
     return Donky;
 })();
 
