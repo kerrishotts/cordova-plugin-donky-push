@@ -54,6 +54,14 @@ public class DonkyPlugin extends CordovaPlugin {
 
     protected ModuleDefinition moduleDefinition;
 
+    protected static boolean cordovaInitialised = false;
+
+    protected static boolean donkyInitialised = false;
+
+    protected static CordovaWebView webView;
+
+    protected static DonkyPlugin _instance;
+
     /**
      * Constructor.
      */
@@ -74,7 +82,9 @@ public class DonkyPlugin extends CordovaPlugin {
 
         Log.d(TAG, "action: ".concat(action));
         try {
-            if(action.equals("updateUserDetails")) {
+            if(action.equals("init")) {
+                this.init();
+            }else if(action.equals("updateUserDetails")) {
                 this.updateUserDetails(args);
             }else if(action.equals("updateDeviceDetails")) {
                 this.updateDeviceDetails(args);
@@ -100,6 +110,25 @@ public class DonkyPlugin extends CordovaPlugin {
         }
         return result;
     }
+
+    public static void sdkIsReady(){
+        DonkyPlugin.donkyInitialised = true;
+        if(DonkyPlugin.cordovaInitialised){
+            Log.d(TAG, "Donky SDK ready after Cordova");
+            DonkyPlugin.notifySdkIsReady();
+        }
+    }
+
+    public static void notifySdkIsReady(){
+        String jsStatement = String.format("document.donkyready()");
+        _instance.executeGlobalJavascript(jsStatement);
+    }
+
+    protected void init() {
+        Log.d(TAG, "plugin init");
+    }
+
+
 
     /**
      * Updates registered user details
@@ -313,7 +342,7 @@ public class DonkyPlugin extends CordovaPlugin {
     }
 
     private void jsNotificationCallback(String jsData, String notificationType){
-        String jsStatement = String.format("cordova.plugins.donky.core._notificationTypeCallbacks[\"%s\"](%s);", notificationType, jsData);
+        String jsStatement = String.format("cordova.plugins.donky._notificationTypeCallbacks[\"%s\"](%s);", notificationType, jsData);
         executeGlobalJavascript(jsStatement);
     }
 
@@ -487,6 +516,13 @@ public class DonkyPlugin extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         DonkyCore.publishLocalEvent(new OnCreateEvent(this.cordova.getActivity().getIntent()));
+        DonkyPlugin.cordovaInitialised = true;
+        DonkyPlugin.webView = webView;
+        DonkyPlugin._instance = this;
+        if(DonkyPlugin.donkyInitialised){
+            Log.d(TAG, "Donky SDK ready before Cordova");
+            DonkyPlugin.notifySdkIsReady();
+        }
     }
 
     @Override

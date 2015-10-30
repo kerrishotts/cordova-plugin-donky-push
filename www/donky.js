@@ -1,4 +1,4 @@
-cordova.define("cordova-plugin-donky-simple-push.donky-core", function(require, exports, module) { var Donky = (function(){
+var Donky = (function(){
 
     /*
      * Public API
@@ -70,4 +70,3 @@ cordova.define("cordova-plugin-donky-simple-push.donky-core", function(require, 
 })();
 
 module.exports = Donky;
-});

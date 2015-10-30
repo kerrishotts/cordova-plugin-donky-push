@@ -64,6 +64,7 @@ public class DonkyApplication extends Application
                 public void success() {
                     moduleDefinition = new ModuleDefinition(TAG, "1.0.0.0");
                     handleDonkySuccessCallback("Successfully initialised Core module");
+                    DonkyPlugin.sdkIsReady();
                 }
 
                 @Override
