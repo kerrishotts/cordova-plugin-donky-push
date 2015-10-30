@@ -22,7 +22,7 @@ Currently supported platforms are: Android and iOS
 * [Installing](#installing)
 * [Using the plugin](#using-the-plugin)
 * [Example project](#example-project)
-* [Updating the Donky SDK](#updating-the-donky-sdk)
+* [Updating the Donky SDK modules](#updating-the-donky-sdk-modules)
 * [License](#license)
  
 # Installing
