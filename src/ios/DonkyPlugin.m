@@ -54,8 +54,7 @@ static bool cordovaInitialised = false;
     webView = theWebView;
     if(sdkInitialised){
         NSLog(@"Donky SDK ready before Cordova");
-        NSString* jsString = [NSString stringWithFormat:@"alert('SDK ready before Cordova');"];
-        [webView stringByEvaluatingJavaScriptFromString:jsString];
+        [[self class] notifySdkIsReady];
     }
     return this;
 }
@@ -66,16 +65,19 @@ static bool cordovaInitialised = false;
     sdkInitialised = true;
     if(cordovaInitialised){
         NSLog(@"Donky SDK ready after Cordova");
-        NSString* jsString = [NSString stringWithFormat:@"alert('SDK ready after Cordova');"];
-        [webView stringByEvaluatingJavaScriptFromString:jsString];
+        [self notifySdkIsReady];
     }
 }
 
-- (void) notifySdkIsReady;
++ (void) notifySdkIsReady;
 {
-    NSLog(@"DonkyPlugin:notifySdkIsReady");
-    NSString* jsString = [NSString stringWithFormat:@"alert('SDK ready');"];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    NSString* jsString = [NSString stringWithFormat:@"document.donkyready()"];
+    [webView stringByEvaluatingJavaScriptFromString:jsString];
+}
+
+- (void) init:(CDVInvokedUrlCommand*)command;
+{
+    NSLog(@"DonkyPlugin:init");
 }
 
 - (void) updateUserDetails:(CDVInvokedUrlCommand*)command;

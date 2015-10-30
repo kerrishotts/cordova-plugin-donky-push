@@ -1,4 +1,4 @@
-var Donky = (function(){
+cordova.define("cordova-plugin-donky-simple-push.donky-core", function(require, exports, module) { var Donky = (function(){
 
     /*
      * Public API
@@ -59,7 +59,15 @@ var Donky = (function(){
 
         return cordova.exec(success, error, 'DonkyPlugin', 'subscribeToContentNotifications', [notificationType]);
     };
+                                                                                                            
+    document.donkyready = function(){
+      document.dispatchEvent(new CustomEvent('donkyready'));
+    };
+                                                                                                                
+    cordova.exec(null, null, 'DonkyPlugin', 'init', []);
+                                                                                                                
     return Donky;
 })();
 
 module.exports = Donky;
+});
