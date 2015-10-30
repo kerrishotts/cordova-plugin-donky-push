@@ -65,13 +65,18 @@ var Donky = (function(){
 
     function checkAndDispatchDeviceAndDonkyReady(){
         if(Donky.donkyready && Donky.deviceready){
-            document.dispatchEvent(new CustomEvent('deviceanddonkyready'));
+            var event = new CustomEvent('deviceanddonkyready');
+            event.success = Donky.initSuccess;
+            document.dispatchEvent(event);
         }
     }
 
-    document.donkyready = function(){
+    document.donkyready = function(success){
         Donky.donkyready = true;
-        document.dispatchEvent(new CustomEvent('donkyready'));
+        Donky.initSuccess = success;
+        var event = new CustomEvent('donkyready');
+        event.success = success;
+        document.dispatchEvent(event);
         checkAndDispatchDeviceAndDonkyReady();
     };
 

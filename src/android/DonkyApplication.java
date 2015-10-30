@@ -64,12 +64,13 @@ public class DonkyApplication extends Application
                 public void success() {
                     moduleDefinition = new ModuleDefinition(TAG, "1.0.0.0");
                     handleDonkySuccessCallback("Successfully initialised Core module");
-                    DonkyPlugin.sdkIsReady();
+                    DonkyPlugin.sdkIsReady(true);
                 }
 
                 @Override
                 public void error(DonkyException donkyException, Map<String, String> validationErrors) {
                     handleDonkyErrorCallback("Error initialising Core module", donkyException, validationErrors);
+                    DonkyPlugin.sdkIsReady(false);
                 }
         });
     }
