@@ -81,7 +81,7 @@ Additionally, you will need to enable Push Notifications and Remote Notification
 - Switch on "Background Modes" and check the "Remote notifications" box
 
 ### Wait for Donky initialisation
-The Donky SDK begins initialisation when your app first starts up. This happens is parallel with the initialisation of the Cordova Webview and is asynchronous because completion of the SDK initialisation depends on the results of remote network requests.
+The Donky SDK begins initialisation when your app first starts up. This happens in parallel with the initialisation of the Cordova Webview and is asynchronous because completion of the SDK initialisation depends on the results of remote network requests.
 
 Therefore, before your app starts performing its operations, you must first wait for both the Cordova Webview to be ready (signalled by the `"deviceready"` event) **and** for the Donky SDK to be ready (signalled by the `"donkyready"` event).
 
