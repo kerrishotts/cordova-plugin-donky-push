@@ -50,6 +50,7 @@ static bool cordovaInitialised = false;
 {
     NSLog(@"DonkyPlugin:initWithWebView");
     CDVPlugin* this = [self xxx_initWithWebView:theWebView];
+    self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.0"];
     
     cordovaInitialised = true;
     webView = theWebView;
@@ -312,12 +313,6 @@ static bool cordovaInitialised = false;
 {
     NSString* jsString = [NSString stringWithFormat:@"cordova.plugins.donky.core._notificationTypeCallbacks[\"%@\"](%@);", notificationType, jsData];
     [self.webView stringByEvaluatingJavaScriptFromString:jsString];
-}
-
-- (void) onInitSuccess;
-{
-    [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
-    self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.0"];
 }
  
 - (void) sendContentNotification:(DNContentNotification*)contentNotification;
