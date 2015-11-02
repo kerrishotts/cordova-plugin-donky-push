@@ -1,4 +1,4 @@
-Donky Simple Push Notifications Plugin for Cordova/Phonegap
+Donky Push Notifications Plugin for Cordova/Phonegap
 ===========================================================
 
 This Cordova/Phonegap plugin allows Cordova apps to easily receive Push Notifications and to send/receive cross-platform peer-to-peer notifications via the [Donky network](http://www.mobiledonky.com).
