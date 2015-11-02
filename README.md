@@ -130,9 +130,10 @@ The plugin also provides a combined event `"deviceanddonkyready"`, which you can
 
 Once the plugin is installed and setup with your API Key, there's nothing more you need to do to receive Push Notifications.
 
-Before you can start sending/receiving custom peer-to-peer notifications between users, details of the user and device must be registered with the Donky Network. You can do this using the `updateRegistrationDetails()` function:
+Before you can start sending/receiving custom peer-to-peer notifications between users, details of the user and device must be registered with the Donky Network. You can do this using the `updateUserDetails()` and `updateDeviceDetails()` functions:
 
-    cordova.plugins.donky.updateRegistrationDetails(success, error, userDetails, deviceDetails);
+    cordova.plugins.donky.updateUserDetails(success, error, userDetails);
+    cordova.plugins.donky.updateDeviceDetails(success, error, deviceDetails)
 
 You can subscribe to receive notifications of a given type:
 
@@ -187,7 +188,7 @@ The plugin is exposed in Cordova as `cordova.plugins.donky` on the `window` obje
 
 ### updateUserDetails()
 
-Updates registered user details.
+Updates registered user details. Can be used to update to an existing userId or register a new user.
 
     cordova.plugins.donky.updateUserDetails(success, error, userDetails);
 
@@ -268,7 +269,10 @@ Example usage:
 
 ### updateRegistrationDetails()
 
-Updates registered user and device details
+Updates registered user and device details.
+
+Note: this can only be called to register a new user; passing in the userId of an existing user will raise an error.
+To update registration details to an existing user, use `updateUserDetails()`.
 
     cordova.plugins.donky.updateRegistrationDetails(success, error, userDetails, deviceDetails);
 
@@ -328,7 +332,10 @@ Example usage:
 
 ### replaceRegistrationDetails()
 
-Replaces registered user and device details
+Replaces registered user and device details.
+
+Note: this can only be called to register a new user; passing in the userId of an existing user will raise an error.
+To update registration details to an existing user, use `updateUserDetails()`.
 
     cordova.plugins.donky.replaceRegistrationDetails(success, error, userDetails, deviceDetails);
 
