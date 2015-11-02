@@ -1,7 +1,7 @@
 Donky Push Notifications Plugin for Cordova/Phonegap
-===========================================================
+====================================================
 
-This Cordova/Phonegap plugin allows Cordova apps to easily receive Push Notifications and to send/receive cross-platform peer-to-peer notifications via the [Donky network](http://www.mobiledonky.com).
+This Cordova/Phonegap plugin allows Cordova apps to easily receive Push Notifications and to send/receive cross-platform peer-to-peer notifications via the [Donky network](http://www.donkynetworks.com).
 
 Currently supported platforms are: Android and iOS
 
@@ -88,7 +88,7 @@ Your Donky API key must be added as a preference to your Cordova config.xml. The
     
 For example:
     
-    <preference name="DONKY_API_KEY" value="QqKcc3JGT8ZLtZtWNG+4CSxt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnNVfg+uFoyVORPWcgK3CHUBvXCcvELg" />
+    <preference name="DONKY_API_KEY" value="5qKcc3JGT8ZLtZzWNG+4CSxt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnNVfg+uFoyVORPWcgK3CHUBvXCcvELg" />
 
 ### Setup APNS for iOS
 
@@ -538,8 +538,8 @@ An example project illustrating use of this plugin can be found here: [https://g
 
 The MIT License
 
-Copyright (c) 2015 Donky.
-http://www.mobiledonky.com
+Copyright (c) 2015 Donky Networks Ltd.
+http://www.donkynetworks.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
