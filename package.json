@@ -1,22 +1,22 @@
 {
     "version": "1.0.0",
-    "name": "cordova-plugin-donky-simple-push",
-    "cordova_name": "Donky Simple Push",
-    "description": "This plugin allows you to receive push and interactive push notifications, feedback the analytics and optionally display them. Powered by Donky (www.mobiledonky.com)",
+    "name": "cordova-plugin-donky-push",
+    "cordova_name": "Donky Push",
+    "description": "This plugin allows you to receive push notifications, feedback the analytics and optionally display them. Powered by Donky (www.mobiledonky.com)",
     "author": "Donky",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Donky-Network/cordova-plugin-donky-simple-push.git"
+        "url": "https://github.com/Donky-Network/cordova-plugin-donky-push.git"
     },
     "cordova": {
-        "id": "cordova-plugin-donky-simple-push",
+        "id": "cordova-plugin-donky-push",
         "platforms": [
           "android",
           "ios"
         ]
     },
-    "issue": "https://github.com/Donky-Network/cordova-plugin-donky-simple-push/issues",
+    "issue": "https://github.com/Donky-Network/cordova-plugin-donky-push/issues",
     "keywords": [
         "ecosystem:cordova",
         "cordova",
