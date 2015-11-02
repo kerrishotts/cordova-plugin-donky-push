@@ -102,7 +102,7 @@ Additionally, you will need to enable Push Notifications and Remote Notification
 ### Wait for Donky initialisation
 The Donky SDK begins initialisation when your app first starts up. This happens in parallel with the initialisation of the Cordova Webview and is asynchronous because completion of the SDK initialisation depends on the results of remote network requests.
 
-Therefore, before your app starts performing its operations, you must first wait for both the Cordova Webview to be ready (signalled by the `"deviceready"` event) **and** for the Donky SDK to be ready (signalled by the `"donkyready"` event). The callback handler function for `"donkyready"` will be passed a `success` flag on event object indicating whether the Donky SDK was successfully initialised or if an error occurred during initialisation. For example:
+Therefore, before your app starts performing its operations, you must first wait for both the Cordova Webview to be ready (signalled by the `"deviceready"` event) **and** for the Donky SDK to be ready (signalled by the `"donkyready"` event). The callback handler function for `"donkyready"` will be passed a `success` flag on event object indicating whether the Donky SDK was successfully initialised or if an error occurred during initialisation. If success if false, an additional `errorMesssage` property will be passed on the event, describing the error. For example:
 
     var donkyready, deviceready;
 
@@ -123,7 +123,7 @@ Therefore, before your app starts performing its operations, you must first wait
         if(e.success){
             console.log("Donky SDK successfully initialised"):
         }else{
-            console.error("An error occurred while initialising the Donky SDK"):
+            console.error("An error occurred while initialising the Donky SDK: " + e.errorMessage):
         }
         donkyready = true;
         onReady();
@@ -137,7 +137,7 @@ The plugin also provides a combined event `"deviceanddonkyready"`, which you can
         if(e.success){
             console.log("Donky SDK successfully initialised"):
         }else{
-            console.error("An error occurred while initialising the Donky SDK"):
+            console.error("An error occurred while initialising the Donky SDK: " + e.errorMessage):
         }
     }
     document.addEventListener("deviceanddonkyready", onReady, false);
