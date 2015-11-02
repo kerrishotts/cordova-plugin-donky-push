@@ -45,6 +45,9 @@ For example, to install for the Android platform
 
     $ plugman install --plugin=cordova-plugin-donky-push --platform=android --project=platforms/android --plugins_dir=plugins
 
+
+Note: This plugin should not be installed alongside other Donky Cordova plugins as each is standalone and may conflict with another.
+
 ## Uninstalling the plugin
 
     $ cordova plugin rm cordova-plugin-donky-push
