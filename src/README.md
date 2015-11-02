@@ -15,6 +15,6 @@ To change the SDK module versions that are used, change the version number in th
 
 ## iOS
 
-While the iOS SDK modules are available via [Cocoapods](https://cocoapods.org/?q=Donky), in order to make use of them in this Cordova plugin, the compiled module components are explicitly included in this repo within subfolders of [src/ios](src/ios) and are explicitly referenced in the [plugin.xml](plugin.xml).
+While the iOS SDK modules are available via [Cocoapods](https://cocoapods.org/?q=Donky), in order to make use of them in this Cordova plugin, the compiled module components are explicitly included in this repo within subfolders of [src/ios](src/ios) and are explicitly referenced in the [plugin.xml](../plugin.xml).
 
-The compiled components and references are generated via scripts located in [scripts/ios/donky_sdk](scripts/ios/donky_sdk). For instructions how to update the iOS SDK modules, see the [README.md](scripts/ios/donky_sdk/README.md) in that folder.
+The compiled components and references are generated via scripts located in [scripts/ios/donky_sdk](../scripts/ios/donky_sdk). For instructions how to update the iOS SDK modules, see the [README.md](../scripts/ios/donky_sdk/README.md) in that folder.
