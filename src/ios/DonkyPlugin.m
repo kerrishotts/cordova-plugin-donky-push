@@ -21,7 +21,7 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
 static UIWebView* webView;
 
 static bool sdkInitialised = false;
-static bool sdkInitSuccess;
+static NSString* sdkInitError = nil;
 static bool cordovaInitialised = false;
 
 + (void)load {
@@ -61,11 +61,11 @@ static bool cordovaInitialised = false;
     return this;
 }
 
-+ (void) sdkIsReady:(bool)success
++ (void) sdkIsReady:(NSString*)errorMsg
 {
     NSLog(@"DonkyPlugin:sdkIsReady");
     sdkInitialised = true;
-    sdkInitSuccess = success;
+    sdkInitError = errorMsg;
     if(cordovaInitialised){
         NSLog(@"Donky SDK ready after Cordova");
         [self notifySdkIsReady];
@@ -74,13 +74,13 @@ static bool cordovaInitialised = false;
 
 + (void) notifySdkIsReady;
 {
-    NSString* successString;
-    if(sdkInitSuccess){
-        successString = @"true";
+    NSString* paramString;
+    if(sdkInitError == nil){
+        paramString = @"true";
     }else{
-        successString = @"false";
+        paramString = [NSString stringWithFormat:@"false, '%@'", sdkInitError];
     }
-    NSString* jsString = [NSString stringWithFormat:@"document.donkyready(%@)", successString];
+    NSString* jsString = [NSString stringWithFormat:@"document.donkyready(%@)", paramString];
     [webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 

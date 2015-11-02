@@ -52,10 +52,10 @@
     
     [[DNDonkyCore sharedInstance] initialiseWithAPIKey:apiKey succcess:^(NSURLSessionDataTask *task, id responseData) {
         NSLog(@"Donky Core initialisation complete");
-        [DonkyPlugin sdkIsReady:true];
+        [DonkyPlugin sdkIsReady:nil];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Error initialising Donky Core: %@", error.localizedDescription);
-        [DonkyPlugin sdkIsReady:false];
+        [DonkyPlugin sdkIsReady:error.localizedDescription];
     }];
 }
 
