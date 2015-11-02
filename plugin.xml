@@ -24,7 +24,7 @@
     </config-file>
     <source-file src="src/android/DonkyApplication.java" target-dir="src/cordova/plugin" />
     <source-file src="src/android/DonkyPlugin.java" target-dir="src/cordova/plugin" />
-    <hook type="after_prepare" src="scripts/android/android_app_name.js" />
+    <hook type="after_prepare" src="scripts/android_app_name.js" />
 
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <!-- PERMISSIONS FOR DONKY SDK -->
