@@ -56,7 +56,7 @@ public class DonkyPlugin extends CordovaPlugin {
 
     protected static boolean cordovaInitialised = false;
     protected static boolean donkyInitialised = false;
-    protected static boolean donkyInitSuccess;
+    protected static String donkyInitError = null;
 
     protected static CordovaWebView webView;
 
@@ -111,9 +111,11 @@ public class DonkyPlugin extends CordovaPlugin {
         return result;
     }
 
-    public static void sdkIsReady(boolean success){
+    public static void sdkIsReady(String errorMessage){
         DonkyPlugin.donkyInitialised = true;
-        DonkyPlugin.donkyInitSuccess = success;
+        if(errorMessage != null){
+            DonkyPlugin.donkyInitError = errorMessage;
+        }
         if(DonkyPlugin.cordovaInitialised){
             Log.d(TAG, "Donky SDK ready after Cordova");
             DonkyPlugin.notifySdkIsReady();
@@ -121,8 +123,10 @@ public class DonkyPlugin extends CordovaPlugin {
     }
 
     public static void notifySdkIsReady(){
-        String success = DonkyPlugin.donkyInitSuccess ? "true" : "false";
-        String jsStatement = String.format("document.donkyready(%s)", success);
+        boolean success = DonkyPlugin.donkyInitError == null;
+        String successStr = success ? "true" : "false";
+        String errorStr = success ? "" : DonkyPlugin.donkyInitError;
+        String jsStatement = String.format("document.donkyready(%s,'%s')", successStr, errorStr);
         _instance.executeGlobalJavascript(jsStatement);
     }
 

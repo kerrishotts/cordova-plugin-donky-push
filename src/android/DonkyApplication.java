@@ -64,13 +64,17 @@ public class DonkyApplication extends Application
                 public void success() {
                     moduleDefinition = new ModuleDefinition(TAG, "1.0.0.0");
                     handleDonkySuccessCallback("Successfully initialised Core module");
-                    DonkyPlugin.sdkIsReady(true);
+                    DonkyPlugin.sdkIsReady(null);
                 }
 
                 @Override
                 public void error(DonkyException donkyException, Map<String, String> validationErrors) {
                     handleDonkyErrorCallback("Error initialising Core module", donkyException, validationErrors);
-                    DonkyPlugin.sdkIsReady(false);
+                    String message = donkyException.getMessage();
+                    if (validationErrors != null) {
+                        message = message.concat("; validation errors: " + validationErrors.toString());
+                    }
+                    DonkyPlugin.sdkIsReady(message);
                 }
         });
     }
@@ -82,10 +86,10 @@ public class DonkyApplication extends Application
 
     private void handleDonkyErrorCallback(String message, DonkyException donkyException, Map<String, String> validationErrors){
         if (donkyException != null) {
-            message.concat("; exception: " + donkyException.getMessage());
+            message = message.concat("; exception: " + donkyException.getMessage());
         }
         if (validationErrors != null) {
-            message.concat("; validation errors: " + validationErrors.toString());
+            message = message.concat("; validation errors: " + validationErrors.toString());
         }
         Log.e(TAG, message);
     }
