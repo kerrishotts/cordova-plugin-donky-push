@@ -79,7 +79,7 @@ static bool cordovaInitialised = false;
     }else{
         successString = @"false";
     }
-    NSString* jsString = [NSString stringWithFormat:@"document.donkyready('%@')", successString];
+    NSString* jsString = [NSString stringWithFormat:@"document.donkyready(%@)", successString];
     [webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
