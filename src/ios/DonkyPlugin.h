@@ -16,9 +16,10 @@
 
 + (UIWebView*) webView;
 + (bool) sdkInitialised;
++ (bool) sdkInitSuccess;
 + (bool) cordovaInitialised;
 
-+ (void) sdkIsReady;
++ (void) sdkIsReady:(bool)success;
 + (void) notifySdkIsReady;
 - (CDVPlugin*)xxx_initWithWebView:(UIWebView*)theWebView;
 - (void) init:(CDVInvokedUrlCommand*)command;
