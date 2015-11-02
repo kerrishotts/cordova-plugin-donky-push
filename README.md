@@ -85,14 +85,46 @@ Additionally, you will need to enable Push Notifications and Remote Notification
 ### Wait for Donky initialisation
 The Donky SDK begins initialisation when your app first starts up. This happens in parallel with the initialisation of the Cordova Webview and is asynchronous because completion of the SDK initialisation depends on the results of remote network requests.
 
-Therefore, before your app starts performing its operations, you must first wait for both the Cordova Webview to be ready (signalled by the `"deviceready"` event) **and** for the Donky SDK to be ready (signalled by the `"donkyready"` event).
+Therefore, before your app starts performing its operations, you must first wait for both the Cordova Webview to be ready (signalled by the `"deviceready"` event) **and** for the Donky SDK to be ready (signalled by the `"donkyready"` event). The callback handler function for `"donkyready"` will be passed a `success` flag on event object indicating whether the Donky SDK was successfully initialised or if an error occurred during initialisation. For example:
 
-The plugin provides a combined event `"deviceanddonkyready"`, which you can listen for in the same way as `"deviceready"`. When this event is fired, it means both Cordova and the Donky SDK are ready and your app can now start performing operations:
+    var donkyready, deviceready;
 
-    document.addEventListener("deviceanddonkyready", initMyApp, false);
-    function initMyApp(){
-        console.log("Both Cordova and Donky SDK are ready. My app can now start to do stuff.");
+    function onReady(){
+        if(donkyready && deviceready){
+            console.log("Both Cordova and Donky SDK are ready");
+        }
     }
+
+    function onDeviceReady(){
+        console.log("Device is ready"):
+        deviceready = true;
+        onReady();
+    }
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDonkyReady(e){
+        if(e.success){
+            console.log("Donky SDK successfully initialised"):
+        }else{
+            console.error("An error occurred while initialising the Donky SDK"):
+        }
+        donkyready = true;
+        onReady();
+    }
+    document.addEventListener("donkyready", onDeviceReady, false);
+
+The plugin also provides a combined event `"deviceanddonkyready"`, which you can listen for in the same way as `"deviceready"`. When this event is fired, it means both Cordova and the Donky SDK are ready and your app can now start performing operations. It will be passed the same flag as `"donkyready"` to indicate whether the Donky SDK was successfully initialised:
+
+    function onReady(e){
+        console.log("Both Cordova and Donky SDK are ready");
+        if(e.success){
+            console.log("Donky SDK successfully initialised"):
+        }else{
+            console.error("An error occurred while initialising the Donky SDK"):
+        }
+    }
+    document.addEventListener("deviceanddonkyready", onReady, false);
+
 
 ## Example usage
 
