@@ -19,35 +19,52 @@ Currently supported platforms are: Android and iOS
 
 ## Contents
 
-* [Installing](#installing)
+* [Installing the plugin](#installing-the-plugin)
 * [Using the plugin](#using-the-plugin)
 * [Example project](#example-project)
 * [Updating the Donky SDK modules](#updating-the-donky-sdk-modules)
 * [Troubleshooting](https://github.com/Donky-Network/cordova-plugin-donky-simple-push/wiki/Troubleshooting)
 * [License](#license)
  
-# Installing
+# Installing the plugin
 
 The plugin can be installed directly from its GitHub repo [https://github.com/Donky-Network/cordova-plugin-donky-simple-push](https://github.com/Donky-Network/cordova-plugin-donky-simple-push):
 
 ## Using the Cordova/Phonegap [CLI](http://docs.phonegap.com/en/edge/guide_cli_index.md.html)
 
-    $ cordova plugin add https://github.com/Donky-Network/cordova-plugin-donky-simple-push
-    $ phonegap plugin add https://github.com/Donky-Network/cordova-plugin-donky-simple-push
+    $ cordova plugin add cordova-plugin-donky-simple-push
+
+OR
+
+    $ phonegap plugin add cordova-plugin-donky-simple-push
 
 ## Using [Cordova Plugman](https://github.com/apache/cordova-plugman)
 
-    $ plugman install --plugin=https://github.com/Donky-Network/cordova-plugin-donky-simple-push --platform=<platform> --project=<project_path> --plugins_dir=plugins
+    $ plugman install --plugin=cordova-plugin-donky-simple-push --platform=<platform> --project=<project_path> --plugins_dir=plugins
 
 For example, to install for the Android platform
 
-    $ plugman install --plugin=https://github.com/Donky-Network/cordova-plugin-donky-simple-push --platform=android --project=platforms/android --plugins_dir=plugins
+    $ plugman install --plugin=cordova-plugin-donky-simple-push --platform=android --project=platforms/android --plugins_dir=plugins
 
-## Uninstalling
-
-The plugin ID is `cordova-plugin-donky-simple-push`, so to uninstall it:
+## Uninstalling the plugin
 
     $ cordova plugin rm cordova-plugin-donky-simple-push
+
+OR
+
+    $ phonegap plugin rm cordova-plugin-donky-simple-push
+
+## Updating the plugin
+
+To update to the latest version of the plugin, remove then re-add it:
+
+    $ cordova plugin rm cordova-plugin-donky-simple-push
+    $ cordova plugin add cordova-plugin-donky-simple-push
+
+OR
+
+    $ phonegap plugin rm cordova-plugin-donky-simple-push
+    $ phonegap plugin add cordova-plugin-donky-simple-push
 
 # Using the plugin
 
