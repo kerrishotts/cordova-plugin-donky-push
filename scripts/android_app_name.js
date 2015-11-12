@@ -17,6 +17,11 @@ module.exports = function(context) {
       }
 
       appPackage = data.match(/package="([^"]+)"/)[1];
+      if(appPackage){
+          applyPackageNameToApplication();
+      }else{
+          throw new Error('Unable to find package name in AndroidManifest.xml');
+      }
 
       var appClass = 'cordova.plugin.DonkyApplication';
 
@@ -29,21 +34,21 @@ module.exports = function(context) {
     });
   }
 
-  if (fs.existsSync(applicationFile)) {
-    fs.readFile(applicationFile, 'utf8', function (err, data) {
-      if (err) {
-        throw new Error('Unable to find DonkyApplication.java: ' + err);
+  function applyPackageNameToApplication(){
+      if (fs.existsSync(applicationFile)) {
+        fs.readFile(applicationFile, 'utf8', function (err, data) {
+          if (err) {
+            throw new Error('Unable to find DonkyApplication.java: ' + err);
+          }
+
+          var importRegEx = /import .*\.R;/;
+
+          data = data.replace(importRegEx, "import " + appPackage + ".R;");
+
+          fs.writeFile(applicationFile, data, 'utf8', function (err) {
+            if (err) throw new Error('Unable to write into DonkyApplication.java: ' + err);
+          })
+        });
       }
-
-      var importRegEx = /import .*\.R;/;
-
-      data = data.replace(importRegEx, "import " + appPackage + ".R;");
-
-      fs.writeFile(applicationFile, data, 'utf8', function (err) {
-        if (err) throw new Error('Unable to write into DonkyApplication.java: ' + err);
-      })
-    });
   }
-
-
 };
