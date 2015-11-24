@@ -1,134 +1,225 @@
 <?xml version='1.0' encoding='UTF-8'?> 
-<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.3'>
-  <name>Donky Push Notifications</name>
+<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.4'>
+  <name>
+     Donky Push Notifications 
+  </name>
   <description>
-     This plugin allows you to receive push notifications and interactive push notifications, feedback the analytics and optionally display them. Powered Donky (www.donkynetworks.com) 
+     This plugin allows you to receive push notifications and interactive push
+    notifications, feedback the analytics and optionally display them. Powered
+    Donky (www.donkynetworks.com) 
   </description>
   <license>
      MIT 
   </license>
-
   <js-module name='donky-core' src='www/donky.js'>
-      <clobbers target='cordova.plugins.donky'/>
+    <clobbers target='cordova.plugins.donky'/>
   </js-module>
-  
   <platform name='android'>
-    <config-file target="config.xml" parent="/*">
-          <feature name="DonkyPlugin" >
-            <param name="android-package" value="cordova.plugin.DonkyPlugin"/>
-          </feature>
+    <config-file target='config.xml' parent='/*'>
+      <feature name='DonkyPlugin'>
+        <param name='android-package' value='cordova.plugin.DonkyPlugin'/>
+      </feature>
     </config-file>
-    <source-file src="src/android/DonkyApplication.java" target-dir="src/cordova/plugin" />
-    <source-file src="src/android/DonkyPlugin.java" target-dir="src/cordova/plugin" />
-    <hook type="after_prepare" src="scripts/android_app_name.js" />
-
-    <config-file target="AndroidManifest.xml" parent="/manifest">
+    <source-file src='src/android/DonkyApplication.java' target-dir='src/cordova/plugin'/>
+    <source-file src='src/android/DonkyPlugin.java' target-dir='src/cordova/plugin'/>
+    <hook type='after_prepare' src='scripts/android_app_name.js'/>
+    <config-file target='AndroidManifest.xml' parent='/manifest'>
       <!-- PERMISSIONS FOR DONKY SDK -->
-      <uses-permission android:name="android.permission.INTERNET" />
-      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-      <uses-permission android:name="android.permission.VIBRATE" />
-
+      <uses-permission android:name='android.permission.INTERNET'/>
+      <uses-permission android:name='android.permission.ACCESS_NETWORK_STATE'/>
+      <uses-permission android:name='android.permission.ACCESS_WIFI_STATE'/>
+      <uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>
+      <uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE'/>
+      <uses-permission android:name='android.permission.VIBRATE'/>
       <!--
        Creates a custom permission so only this app can receive its messages.
        NOTE: the permission *must* be called PACKAGE.permission.C2D_MESSAGE,
        where PACKAGE is the application's package name.
        -->
-      <permission
-              android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
-              android:protectionLevel="signature"/>
-      <uses-permission
-              android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
-
-      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
-      <uses-permission android:name="android.permission.WAKE_LOCK" />
-      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+      <permission android:name='$PACKAGE_NAME.permission.C2D_MESSAGE' android:protectionLevel='signature'/>
+      <uses-permission android:name='$PACKAGE_NAME.permission.C2D_MESSAGE'/>
+      <uses-permission android:name='com.google.android.c2dm.permission.RECEIVE'/>
+      <uses-permission android:name='android.permission.WAKE_LOCK'/>
+      <uses-permission android:name='android.permission.RECEIVE_BOOT_COMPLETED'/>
     </config-file>
-
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <receiver
-              android:name="net.donky.core.gcm.DonkyGcmBroadcastReceiver"
-              android:permission="com.google.android.c2dm.permission.SEND">
+    <config-file target='AndroidManifest.xml' parent='/manifest/application'>
+      <receiver android:name='net.donky.core.gcm.DonkyGcmBroadcastReceiver' android:permission='com.google.android.c2dm.permission.SEND'>
         <intent-filter>
-          <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-          <category android:name="$PACKAGE_NAME" />
+          <action android:name='com.google.android.c2dm.intent.RECEIVE'/>
+          <category android:name='$PACKAGE_NAME'/>
         </intent-filter>
       </receiver>
-
-      <receiver android:name="net.donky.core.DonkyBroadcastReceiver" >
+      <receiver android:name='net.donky.core.DonkyBroadcastReceiver'>
         <intent-filter>
-          <action android:name="net.donky.core.ACTION_SYNCHRONISE" />
+          <action android:name='net.donky.core.ACTION_SYNCHRONISE'/>
         </intent-filter>
       </receiver>
-
-      <service
-              android:name="net.donky.core.gcm.DonkyGcmIntentService"
-              android:exported="false" />
-      <service
-              android:name="net.donky.core.DonkyIntentService"
-              android:exported="false" />
+      <service android:name='net.donky.core.gcm.DonkyGcmIntentService' android:exported='false'/>
+      <service android:name='net.donky.core.DonkyIntentService' android:exported='false'/>
     </config-file>
-
     <config-file target='AndroidManifest.xml' parent='/manifest/application'>
       <service android:name='net.donky.core.messaging.push.logic.PushLogicIntentService' android:exported='false'/>
     </config-file>
-
-
-    <framework src="net.donky:donky-core:2.2.0.3" />
-    <framework src="net.donky:donky-module-analytics:2.2.0.3" />
+    <framework src='net.donky:donky-core:2.2.0.3'/>
+    <framework src='net.donky:donky-module-analytics:2.2.0.3'/>
     <framework src='net.donky:donky-module-push-logic:2.2.0.3'/>
     <framework src='net.donky:donky-module-push-ui:2.2.0.3'/>
-    <framework src="com.android.support:appcompat-v7:22.2.1" />
-    <framework src="com.google.android.gms:play-services-gcm:+" />
+    <framework src='com.android.support:appcompat-v7:22.2.1'/>
+    <framework src='com.google.android.gms:play-services-gcm:+'/>
   </platform>
-  
   <platform name='ios'>
     <config-file target='config.xml' parent='/*'>
       <feature name='DonkyPlugin'>
         <param name='ios-package' value='DonkyPlugin'/>
       </feature>
     </config-file>
-    <hook type="after_plugin_install" src="scripts/ios/resolveDependencies.js"  />
-    <hook type="after_prepare" src="scripts/ios/ios_inject_api_key.js" />
+    <hook type='after_plugin_install' src='scripts/ios/resolveDependencies.js'/>
+    <hook type='after_prepare' src='scripts/ios/ios_inject_api_key.js'/>
     <source-file src='src/ios/DonkyPlugin.h'/>
     <source-file src='src/ios/DonkyPlugin.m'/>
     <source-file src='src/ios/AppDelegate+Donky.h'/>
     <source-file src='src/ios/AppDelegate+Donky.m'/>
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
-
-    <resource-file src='src/ios/Localizable.strings' />
-
-    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+    <resource-file src='src/ios/Localizable.strings'/>
+    <config-file target='*-Info.plist' parent='UIBackgroundModes'>
       <array>
-        <string>remote-notification</string>
+        <string>
+           remote-notification 
+        </string>
       </array>
     </config-file>
-
-    <config-file target="*-Info.plist" parent="DonkyApiKey">
+    <config-file target='*-Info.plist' parent='DonkyApiKey'>
       <array>
-        <string>%DONKY_API_KEY%</string>
+        <string>
+           %DONKY_API_KEY% 
+        </string>
       </array>
     </config-file>
-
     <!-- Frameworks -->
+    <!-- UIView-Autolayout -->
+    <!-- AFNetworking -->
+    <!-- Donky Headers -->
+    <!-- Donky Source -->
+    <source-file src='src/ios/Donky/DNDonkyDataModel.xcdatamodeld'/>
+    <!-- Donky Resources -->
+    <framework src='Foundation.framework' autogen='true'/>
+    <framework src='UIKit.framework' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDonkyNetworkDetails.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNUserDefaultsHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNAccountController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNUserAuthentication.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNAccountRegistrationResponse.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNConfigurationController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNClientDetails.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNClientDetailsHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDeviceDetails.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDeviceDetailsHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNRegistrationDetails.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNUserDetails.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNTag.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNAppSettingsController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNAssetController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/NSManagedObject+DNHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/NSManagedObjectContext+DNDelete.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/NSManagedObjectContext+DNHelpers.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNKeychainHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNKeychainItemWrapper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDataController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDeviceUser.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNotification.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNUser.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDonkyCoreFunctionalHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNEventSubscriber.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNLocalEvent.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNModuleDefinition.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNModuleHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNotificationSubscriber.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNOutboundModules.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNRegisteredServices.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNSubscription.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDonkyCore.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNErrorController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNLoggingController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNClientNotification.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNContentNotification.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkDataHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNDeviceConnectivityController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNRequest.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNRetryHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNRetryObject.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNServerNotification.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNSessionManager.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkControllerQueue.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkOperation.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNSynchroniseResponse.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNPushNotificationUpdate.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNotificationController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNSignalRInterface.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNBlockDefinitions.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/NSDate+DNDateHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/NSMutableDictionary+DNDictionary.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/UIViewController+DNRootViewController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNConstants.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNFileHelpers.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetwork+Localization.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNApplicationShortCutHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNSystemHelpers.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DCAConstants.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DCAAnalyticsController.h' autogen='true'/>
+    <resource-file src='src/ios/Donky-Core-SDK/resources/DNConfiguration.plist' autogen='true'/>
+    <resource-file src='src/ios/Donky-Core-SDK/resources/DNLocalization.strings' autogen='true'/>
+    <source-file framework='true' src='src/ios/Donky-Core-SDK/libPods-Donky-Core-SDK.a' autogen='true'/>
+    <framework src='Foundation.framework' autogen='true'/>
+    <framework src='UIKit.framework' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIActionHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIAlertHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIAvatarImageView.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/NSDate+DCMDate.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/UIColor+DCMColour.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DNResponder+FirstResponder.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIConstants.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINotificationController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIBannerView.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINotificationViewHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINotification.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUILocalization+Localization.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIMainController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINewBannerView.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DRichMessage+Localization.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DRUITheme.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DRUIThemeConstants.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUISplitViewController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIThemeController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUITheme.h' autogen='true'/>
+    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/DRLocalization.strings' autogen='true'/>
+    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/DCUILocalization.strings' autogen='true'/>
+    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/common_messaging_default_avatar.png' autogen='true'/>
+    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/common_messaging_default_avatar@2x.png' autogen='true'/>
+    <source-file framework='true' src='src/ios/Donky-CommonMessaging-UI/libPods-Donky-CommonMessaging-UI.a' autogen='true'/>
+    <framework src='Foundation.framework' autogen='true'/>
+    <framework src='UIKit.framework' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPConstants.h' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotificationControllerHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotificationController.h' autogen='true'/>
+    <source-file framework='true' src='src/ios/Donky-SimplePush-Logic/libPods-Donky-SimplePush-Logic.a' autogen='true'/>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
     <framework src='AudioToolbox.framework' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-UI/headers/DPUIBannerView.h' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-UI/headers/DPUINotificationController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-UI/headers/DPUINotification.h' autogen='true'/>
+    <resource-file src='src/ios/Donky-SimplePush-UI/resources/avatar_default.png' autogen='true'/>
+    <resource-file src='src/ios/Donky-SimplePush-UI/resources/avatar_default@2x.png' autogen='true'/>
+    <resource-file src='src/ios/Donky-SimplePush-UI/resources/avatar_default@3x.png' autogen='true'/>
+    <source-file framework='true' src='src/ios/Donky-SimplePush-UI/libPods-Donky-SimplePush-UI.a' autogen='true'/>
+    <framework src='Foundation.framework' autogen='true'/>
     <framework src='SystemConfiguration.framework' autogen='true'/>
     <framework src='Security.framework' autogen='true'/>
     <framework src='MobileCoreServices.framework' autogen='true'/>
     <framework src='CoreGraphics.framework' autogen='true'/>
-    <framework src='CoreData.framework' autogen='true'/>
-
-    <!-- UIView-Autolayout -->
-    <header-file src='src/ios/UIView-Autolayout/headers/UIView+AutoLayout.h' autogen='true'/>
-    <source-file framework='true' src='src/ios/UIView-Autolayout/libPods-UIView-Autolayout.a' autogen='true'/>
-
-    <!-- AFNetworking -->
     <header-file src='src/ios/AFNetworking/headers/AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLConnectionOperation.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFHTTPRequestOperation.h' autogen='true'/>
@@ -150,295 +241,8 @@
     <header-file src='src/ios/AFNetworking/headers/UIRefreshControl+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIWebView+AFNetworking.h' autogen='true'/>
     <source-file framework='true' src='src/ios/AFNetworking/libPods-AFNetworking.a' autogen='true'/>
-
-    <!-- Donky Headers -->
-    <header-file src='src/ios/Donky/DAAutomationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DAMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DATrigger.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCAAnalyticsController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCAConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCMConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCMLogicMessageMapper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCMMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIActionHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIAlertHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIAvatarImageView.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIBannerView.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUILocalization+Localization.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUINewBannerView.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUINotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUINotificationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUINotificationViewHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUISplitViewController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUITheme.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DCUIThemeController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNAccountController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNAccountRegistrationResponse.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNAppSettingsController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNApplicationShortCutHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNAssetController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNBlockDefinitions.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNClientDetails.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNClientDetailsHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNClientNotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNConfigurationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNContentNotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDataController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDeviceConnectivityController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDeviceDetails.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDeviceDetailsHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDeviceUser.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDonkyCore.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDonkyCoreFunctionalHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNDonkyNetworkDetails.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNErrorController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNEventSubscriber.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNFileHelpers.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNKeychainHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNKeychainItemWrapper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNLocalEvent.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNLoggingController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNMessage.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNModuleDefinition.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNModuleHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNetwork+Localization.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNetworkController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNetworkControllerQueue.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNetworkDataHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNetworkHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNetworkOperation.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNotificationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNNotificationSubscriber.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNOutboundModules.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNPushNotificationUpdate.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRegisteredServices.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRegistrationDetails.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRequest.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNResponder+FirstResponder.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRetryHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRetryObject.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRichMessage+DNRichMessageHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNRichMessage.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNSequencingAccountController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNServerNotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNSessionManager.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNSignalRInterface.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNSubscription.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNSynchroniseResponse.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNSystemHelpers.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNTag.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNUser.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNUserAuthentication.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNUserDefaultsHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DNUserDetails.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DPConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DPPushNotificationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DPPushNotificationControllerHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DPUIBannerView.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DPUINotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DPUINotificationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIAppearanceHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRICellPanGestureHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIDataController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIDataControllerHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIMainControllerHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIMessageViewController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIMessageViewControllerHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRINotification.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIOptionsView.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRISearchController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRITableViewCell.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRITableViewCellExpirationHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRITableViewCellHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRITableViewController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRIViewHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRLFetchedResultsController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRLogicHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRLogicMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRLogicMainControllerHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRMessageViewController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRMessageViewControllerHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRUIPopUpMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRUITheme.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRUIThemeConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DRichMessage+Localization.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DSOperation.h' autogen='true'/>
-    <header-file src='src/ios/Donky/DSSequenceController.h' autogen='true'/>
-    <header-file src='src/ios/Donky/NSDate+DCMDate.h' autogen='true'/>
-    <header-file src='src/ios/Donky/NSDate+DNDateHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/NSManagedObject+DNHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky/NSManagedObjectContext+DNDelete.h' autogen='true'/>
-    <header-file src='src/ios/Donky/NSManagedObjectContext+DNHelpers.h' autogen='true'/>
-    <header-file src='src/ios/Donky/NSMutableDictionary+DNDictionary.h' autogen='true'/>
-    <header-file src='src/ios/Donky/UIColor+DCMColour.h' autogen='true'/>
-    <header-file src='src/ios/Donky/UIViewController+DNRootViewController.h' autogen='true'/>
-
-    <!-- Donky Source -->
-    <source-file src='src/ios/Donky/DNDonkyDataModel.xcdatamodeld'/>
-
-    <source-file src='src/ios/Donky/DAAutomationController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DAMainController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DATrigger.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCAAnalyticsController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCAConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCMConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCMLogicMessageMapper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCMMainController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIActionHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIAlertHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIAvatarImageView.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIBannerView.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUILocalization+Localization.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIMainController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUINewBannerView.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUINotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUINotificationController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUINotificationViewHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUISplitViewController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUITheme.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DCUIThemeController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNAccountController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNAccountRegistrationResponse.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNAppSettingsController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNApplicationShortCutHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNAssetController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNClientDetails.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNClientDetailsHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNClientNotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNConfigurationController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNContentNotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDataController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDeviceConnectivityController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDeviceDetails.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDeviceDetailsHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDeviceUser.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDonkyCore.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDonkyCoreFunctionalHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNDonkyNetworkDetails.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNErrorController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNEventSubscriber.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNFileHelpers.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNKeychainHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNKeychainItemWrapper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNLocalEvent.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNLoggingController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNMessage.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNModuleDefinition.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNModuleHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNetwork+Localization.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNetworkController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNetworkControllerQueue.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNetworkDataHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNetworkHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNetworkOperation.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNotificationController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNNotificationSubscriber.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNOutboundModules.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNPushNotificationUpdate.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRegisteredServices.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRegistrationDetails.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRequest.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRetryHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRetryObject.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRichMessage+DNRichMessageHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNRichMessage.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNSequencingAccountController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNServerNotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNSessionManager.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNSignalRInterface.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNSubscription.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNSynchroniseResponse.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNSystemHelpers.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNTag.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNUser.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNUserAuthentication.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNUserDefaultsHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DNUserDetails.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DPConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DPPushNotificationController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DPPushNotificationControllerHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DPUIBannerView.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DPUINotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DPUINotificationController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIAppearanceHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRICellPanGestureHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIDataController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIDataControllerHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIMainController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIMainControllerHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIMessageViewController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIMessageViewControllerHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRINotification.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIOptionsView.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRISearchController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRITableViewCell.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRITableViewCellExpirationHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRITableViewCellHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRITableViewController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRIViewHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRLFetchedResultsController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRLogicHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRLogicMainController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRLogicMainControllerHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRMessageViewController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRMessageViewControllerHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRUIPopUpMainController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRUITheme.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRUIThemeConstants.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DRichMessage+Localization.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DSOperation.m' autogen='true'/>
-    <source-file src='src/ios/Donky/DSSequenceController.m' autogen='true'/>
-    <source-file src='src/ios/Donky/NSDate+DCMDate.m' autogen='true'/>
-    <source-file src='src/ios/Donky/NSDate+DNDateHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/NSManagedObject+DNHelper.m' autogen='true'/>
-    <source-file src='src/ios/Donky/NSManagedObjectContext+DNDelete.m' autogen='true'/>
-    <source-file src='src/ios/Donky/NSManagedObjectContext+DNHelpers.m' autogen='true'/>
-    <source-file src='src/ios/Donky/NSMutableDictionary+DNDictionary.m' autogen='true'/>
-    <source-file src='src/ios/Donky/UIColor+DCMColour.m' autogen='true'/>
-    <source-file src='src/ios/Donky/UIResponder+FirstResponder.m' autogen='true'/>
-    <source-file src='src/ios/Donky/UIViewController+DNRootViewController.m' autogen='true'/>
-
-    <!-- Donky Resources -->
-    <resource-file src='src/ios/Resources/DCUILocalization.strings' autogen='true'/>
-    <resource-file src='src/ios/Resources/DNConfiguration.plist' autogen='true'/>
-    <resource-file src='src/ios/Resources/DNLocalization.strings' autogen='true'/>
-    <resource-file src='src/ios/Resources/DRLocalization.strings' autogen='true'/>
-    <resource-file src='src/ios/Resources/avatar_default.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/avatar_default@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/avatar_default@3x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/common_messaging_default_avatar.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/common_messaging_default_avatar@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky.mp3' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_default_avatar_closed.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_default_avatar_closed@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_default_avatar_closed@3x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_default_avatar_open.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_default_avatar_open@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_default_avatar_open@3x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_full_screen.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_full_screen@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_inbox_icon.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_inbox_icon@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_inbox_icon@3x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_inbox_selected_icon.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_inbox_selected_icon@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_inbox_selected_icon@3x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_more_icon.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_more_icon@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_more_icon@3x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_select_all_icon.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_select_all_icon@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Resources/donky_select_all_icon@3x.png' autogen='true'/>
-
+    <framework src='Foundation.framework' autogen='true'/>
+    <header-file src='src/ios/UIView-Autolayout/headers/UIView+AutoLayout.h' autogen='true'/>
+    <source-file framework='true' src='src/ios/UIView-Autolayout/libPods-UIView-Autolayout.a' autogen='true'/>
   </platform>
 </plugin>
