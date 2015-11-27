@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?> 
-<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.5'>
+<?xml version='1.0' encoding='UTF-8'?>
+<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.6'>
   <name>Donky Push Notifications</name>
   <description>
      This plugin allows you to receive push notifications and interactive push
@@ -29,11 +29,6 @@
       <uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>
       <uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE'/>
       <uses-permission android:name='android.permission.VIBRATE'/>
-      <!--
-       Creates a custom permission so only this app can receive its messages.
-       NOTE: the permission *must* be called PACKAGE.permission.C2D_MESSAGE,
-       where PACKAGE is the application's package name.
-       -->
       <permission android:name='$PACKAGE_NAME.permission.C2D_MESSAGE' android:protectionLevel='signature'/>
       <uses-permission android:name='$PACKAGE_NAME.permission.C2D_MESSAGE'/>
       <uses-permission android:name='com.google.android.c2dm.permission.RECEIVE'/>
@@ -170,6 +165,13 @@
     <resource-file src='src/ios/Donky-Core-SDK/resources/DNConfiguration.plist' autogen='true'/>
     <resource-file src='src/ios/Donky-Core-SDK/resources/DNLocalization.strings' autogen='true'/>
     <source-file framework='true' src='src/ios/Donky-Core-SDK/libPods-Donky-Core-SDK.a' autogen='true'/>
+    <framework src='Foundation.framework' autogen='true'/>
+    <framework src='UIKit.framework' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-Logic/headers/DCMConstants.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-Logic/headers/DCMLogicMessageMapper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-Logic/headers/DCMMainController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-CommonMessaging-Logic/headers/DNMessage.h' autogen='true'/>
+    <source-file framework='true' src='src/ios/Donky-CommonMessaging-Logic/libPods-Donky-CommonMessaging-Logic.a' autogen='true'/>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIActionHelper.h' autogen='true'/>

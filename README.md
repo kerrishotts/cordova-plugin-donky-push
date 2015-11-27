@@ -84,9 +84,9 @@ The plugin uses the native Donky iOS and Android SDKs: for detailed information 
 
 In order to make use of this plugin in your app, you need to do the following:
 
-### Register to use the Donky Network
+### Register to use the Donky Network and create an App Space
 
-If you haven't registered to use Donky, see the [getting started guide](http://docs.mobiledonky.com/docs/start-here) for how to get an API key.
+If you haven't registered to use Donky and created an App Space, see the [getting started guide](http://docs.mobiledonky.com/docs/start-here) for how to get an API key and create an App Space.
 
 ### Put your API key into config.xml
 
@@ -96,7 +96,7 @@ Your Donky API key must be added as a preference to your Cordova config.xml. The
     
 For example:
     
-    <preference name="DONKY_API_KEY" value="5qKcc3JGT8ZLtZzWNG+4CSxt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnNVfg+uFoyVORPWcgK3CHUBvXCcvELg" />
+    <preference name="DONKY_API_KEY" value="5qKcc3JGT8ZLtZxWNG+4CSxt+QCBw4vLdUl7NzKWo4oRfRUWUXca2uPnNVfg+uFoyVORPWcgK3CHUBvXCcvELg" />
 
 ### Setup APNS for iOS
 
@@ -108,6 +108,14 @@ Additionally, you will need to enable Push Notifications and Remote Notification
 - Go to the "Capabilities" pane
 - Switch on "Push Notifications"
 - Switch on "Background Modes" and check the "Remote notifications" box
+
+Finally ensure that your app id which is set in your Cordova projects **config.xml** file matches the bundle id you have set up for the app in Apples developer tools as part of the APNS set up described above. e.g.
+
+    <widget id="{YOUR BUNDLE ID HERE}" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+For example:
+
+    <widget id="com.mobiledonky.example.push" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
 ### Wait for Donky initialisation
 The Donky SDK begins initialisation when your app first starts up. This happens in parallel with the initialisation of the Cordova Webview and is asynchronous because completion of the SDK initialisation depends on the results of remote network requests.
