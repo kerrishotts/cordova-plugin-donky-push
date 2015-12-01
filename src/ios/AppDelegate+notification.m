@@ -1,6 +1,7 @@
 
 #import "AppDelegate+notification.h"
 #import "DNNotificationController.h"
+#import "DNNetworkController.h"
 #import <objc/runtime.h>
 
 
@@ -20,6 +21,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     NSLog(@"didReceiveRemoteNotification with userInfo: %@", userInfo);
     [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:nil completionHandler:^(NSString *string) {
+        [[DNNetworkController sharedInstance] synchronise];
         completionHandler(UIBackgroundFetchResultNewData);
     }];
 }
