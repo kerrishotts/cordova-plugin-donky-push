@@ -1,6 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.7'>
-  <name>Donky Push Notifications</name>
+<?xml version='1.0' encoding='UTF-8'?> 
+<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.8'>
+  <name>
+     Donky Push Notifications 
+  </name>
   <description>
      This plugin allows you to receive push notifications and interactive push
     notifications, feedback the analytics and optionally display them. Powered
@@ -158,6 +160,7 @@
     <header-file src='src/ios/Donky-Core-SDK/headers/DNConstants.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNFileHelpers.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNNetwork+Localization.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNQueueManager.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNApplicationShortCutHelper.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNSystemHelpers.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DCAConstants.h' autogen='true'/>
