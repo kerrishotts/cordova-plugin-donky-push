@@ -4,7 +4,9 @@
 #import "DNNetworkController.h"
 #import "DNSubscription.h"
 #import "DNServerNotification.h"
+#import "NSMutableDictionary+DNDictionary.h"
 #import <objc/runtime.h>
+
 
 
 BOOL debugEnabled = TRUE;
@@ -304,6 +306,68 @@ static bool cordovaInitialised = false;
     @catch (NSException* exception) {
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];
     }
+}
+
+- (NSString *)getRegistrationDetails:(CDVInvokedUrlCommand*)command {
+
+    self.cordova_command = command;
+    
+    @try {
+
+        DNRegistrationDetails *registrationDetailsMaster = [DNAccountController registrationDetails];
+        
+        NSMutableDictionary *registrationDetails = [[NSMutableDictionary alloc] init];
+        
+        NSMutableDictionary *deviceDetails = [[NSMutableDictionary alloc] init];
+        
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] additionalProperties] forKey:@"additionalProperties"];
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] deviceName] forKey:@"deviceName"];
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] type] forKey:@"type"];
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] deviceSecret] forKey:@"deviceSecret"];
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] operatingSystem] forKey:@"operatingSystem"];
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] apnsToken] forKey:@"apnsToken"];
+        [deviceDetails dnSetObject:[[registrationDetailsMaster deviceDetails] apnsAudio] forKey:@"apnsAudio"];
+        
+        [registrationDetails dnSetObject:deviceDetails forKey:@"deviceDetails"];
+
+        
+        NSMutableDictionary *clientDetails = [[NSMutableDictionary alloc] init];
+        [clientDetails dnSetObject:[[registrationDetailsMaster clientDetails] currentLocalTime] forKey:@"currentLocalTime"];
+        [clientDetails dnSetObject:[[registrationDetailsMaster clientDetails] appVersion] forKey:@"appVersion"];
+        [clientDetails dnSetObject:[[registrationDetailsMaster clientDetails] sdkVersion] forKey:@"sdkVersion"];
+        [clientDetails dnSetObject:[[registrationDetailsMaster clientDetails] moduleVersions] forKey:@"moduleVersions"];
+        
+        [registrationDetails dnSetObject:clientDetails forKey:@"clientDetails"];
+        
+        NSMutableDictionary *userDetails = [[NSMutableDictionary alloc] init];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] userID] forKey:@"userID"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] networkProfileID] forKey:@"networkProfileID"];
+        [userDetails dnSetObject:@([[registrationDetailsMaster userDetails] isAnonymous]) forKey:@"anonymous"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] displayName] forKey:@"displayName"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] emailAddress] forKey:@"emailAddress"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] mobileNumber] forKey:@"mobileNumber"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] userID] forKey:@"userID"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] countryCode] forKey:@"countryCode"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] avatarAssetID] forKey:@"avatarAssetID"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] selectedTags] forKey:@"selectedTags"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] additionalProperties] forKey:@"additionalProperties"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] firstName] forKey:@"firstName"];
+        [userDetails dnSetObject:[[registrationDetailsMaster userDetails] lastName] forKey:@"lastName"];
+        
+        [registrationDetails dnSetObject:userDetails forKey:@"userDetails"];
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:registrationDetails
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:nil];
+        
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
+        return jsonString;
+    }
+    @catch (NSException* exception) {
+        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];
+    }
+    
 }
 
 /*

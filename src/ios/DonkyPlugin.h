@@ -6,6 +6,7 @@
 
 #import "DNDonkyCore.h"
 #import "DNModuleDefinition.h"
+#import "DNRegistrationDetails.h"
 
 @interface DonkyPlugin :CDVPlugin {
     CDVInvokedUrlCommand* cordova_command;
@@ -32,4 +33,6 @@
 - (void) sendContentNotificationToUsers:(CDVInvokedUrlCommand*)command;
 - (void) synchronise:(CDVInvokedUrlCommand*)command;
 - (void) subscribeToContentNotifications:(CDVInvokedUrlCommand*)command;
+- (NSString *)getRegistrationDetails:(CDVInvokedUrlCommand*)command;
+
 @end
