@@ -23,6 +23,7 @@
     [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:nil completionHandler:^(NSString *string) {
         completionHandler(UIBackgroundFetchResultNewData);
         [[DNNetworkController sharedInstance] synchronise];
+        
     }];
 }
 
