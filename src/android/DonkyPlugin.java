@@ -28,6 +28,7 @@ import net.donky.core.DonkyListener;
 import net.donky.core.ModuleDefinition;
 import net.donky.core.NotificationBatchListener;
 import net.donky.core.Subscription;
+import net.donky.core.account.RegistrationDetails;
 import net.donky.core.account.DeviceDetails;
 import net.donky.core.account.DonkyAccountController;
 import net.donky.core.account.UserDetails;
@@ -84,6 +85,8 @@ public class DonkyPlugin extends CordovaPlugin {
         try {
             if(action.equals("init")) {
                 this.init();
+			}else if(action.equals("getRegistrationDetails")) {
+                this.getRegistrationDetails(args);
             }else if(action.equals("updateUserDetails")) {
                 this.updateUserDetails(args);
             }else if(action.equals("updateDeviceDetails")) {
@@ -161,6 +164,17 @@ public class DonkyPlugin extends CordovaPlugin {
             });
     }
 
+	/*
+	 * Gets the registered user and device details
+     * @throws Exception
+	*/
+	protected void getRegistrationDetails(JSONArray args) throws Exception {
+		RegistrationDetails details = DonkyAccountController.getInstance().getRegistrationDetails();
+
+		Gson gson = new Gson();
+		handleDonkySuccessCallback(gson.toJson(details));
+	}
+	
     /**
      * Updates registered device details
      * @param args JSONArray of arguments containing new device details

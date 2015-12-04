@@ -7,8 +7,6 @@
 #import "NSMutableDictionary+DNDictionary.h"
 #import <objc/runtime.h>
 
-
-
 BOOL debugEnabled = TRUE;
 #define DLog(fmt, ...) { \
 if (debugEnabled) \
@@ -308,7 +306,7 @@ static bool cordovaInitialised = false;
     }
 }
 
-- (NSString *)getRegistrationDetails:(CDVInvokedUrlCommand*)command {
+- (void)getRegistrationDetails:(CDVInvokedUrlCommand*)command {
 
     self.cordova_command = command;
     
@@ -361,8 +359,7 @@ static bool cordovaInitialised = false;
                                                              error:nil];
         
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
-        return jsonString;
+        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK registrationDetails:jsonString]];
     }
     @catch (NSException* exception) {
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];

@@ -33,6 +33,6 @@
 - (void) sendContentNotificationToUsers:(CDVInvokedUrlCommand*)command;
 - (void) synchronise:(CDVInvokedUrlCommand*)command;
 - (void) subscribeToContentNotifications:(CDVInvokedUrlCommand*)command;
-- (NSString *)getRegistrationDetails:(CDVInvokedUrlCommand*)command;
+- (void) getRegistrationDetails:(CDVInvokedUrlCommand*)command;
 
 @end
