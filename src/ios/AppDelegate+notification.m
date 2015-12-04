@@ -21,8 +21,8 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     NSLog(@"didReceiveRemoteNotification with userInfo: %@", userInfo);
     [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:nil completionHandler:^(NSString *string) {
-        [[DNNetworkController sharedInstance] synchronise];
         completionHandler(UIBackgroundFetchResultNewData);
+        [[DNNetworkController sharedInstance] synchronise];
     }];
 }
 
