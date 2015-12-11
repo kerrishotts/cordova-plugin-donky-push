@@ -45,6 +45,8 @@ OR
 
     $ phonegap plugin add cordova-plugin-donky-push
 
+**Important:** Due to Cordova not copying the hidden file .xccurrentversion please manually copy the package *./plugins/cordova-plugin-donky-push/src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld* into the Donky **plugins** folder in XCode. The Xcode project can be found in *./platform/ios*
+
 ## Using [Cordova Plugman](https://github.com/apache/cordova-plugman)
 
     $ plugman install --plugin=cordova-plugin-donky-push --platform=<platform> --project=<project_path> --plugins_dir=plugins
@@ -75,6 +77,8 @@ OR
 
     $ phonegap plugin rm cordova-plugin-donky-push
     $ phonegap plugin add cordova-plugin-donky-push
+
+**Important:** Due to Cordova not copying the hidden file .xccurrentversion please manually copy the package *./plugins/cordova-plugin-donky-push/src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld* into the Donky **plugins** folder in XCode. The Xcode project can be found in *./platform/ios*
 
 # Using the plugin
 
