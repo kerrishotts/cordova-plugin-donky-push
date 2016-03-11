@@ -1,7 +1,8 @@
 #import "AppDelegate+Donky.h"
 #import <objc/runtime.h>
 #import "DNDonkyCore.h"
-#import "DPUINotificationController.h"
+// BM: WIP #import "DPUINotificationController.h"
+#import "DPPushNotificationController.h"
 #import "DCAAnalyticsController.h"
 #import "DonkyPlugin.h"
 
@@ -43,8 +44,13 @@
     NSLog(@"Start Donky analytics controller");
     [[DCAAnalyticsController sharedInstance] start];
     
-    NSLog(@"Start Donky push UI controller");
-    [[DPUINotificationController sharedInstance] start];
+    // BM: WIP removing UI
+    //NSLog(@"Start Donky push UI controller");
+    //[[DPUINotificationController sharedInstance] start];
+    
+    //Start the push logic controller:
+    NSLog(@"Start Donky Push controller");
+    [[DPPushNotificationController sharedInstance] start];
     
     NSString* apiKey = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"DonkyApiKey"] objectAtIndex:0];
     
