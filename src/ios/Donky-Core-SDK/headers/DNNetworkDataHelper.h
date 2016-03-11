@@ -14,17 +14,17 @@
 
 + (NSArray *)clientNotificationsWithContext:(NSManagedObjectContext *)context;
 
++ (void)contentNotificationsArray:(NSArray *)notifications insertObject:(BOOL)insert completion:(DNNetworkControllerSuccessBlock)completion;
+
 + (NSArray *)contentNotificationsWithContext:(NSManagedObjectContext *)context;
 
 + (NSMutableDictionary *)networkClientNotifications:(NSMutableArray *)clientNotifications networkContentNotifications:(NSMutableArray *)contentNotifications tempContext:(BOOL)temp;
 
-+ (void)saveClientNotificationsToStore:(NSArray *)array;
++ (void)saveClientNotificationsToStore:(NSArray *)array completion:(DNCompletionBlock)completionBlock;
 
-+ (NSMutableArray *)sendContentNotifications:(NSArray *)notifications withContext:(NSManagedObjectContext *)context;
++ (void)saveContentNotificationsToStore:(NSArray *)notifications completion:(DNCompletionBlock)completionBlock;
 
-+ (void)saveContentNotificationsToStore:(NSArray *)array;
-
-+ (void)deleteNotifications:(NSArray *)notifications;
++ (void)deleteNotifications:(NSArray *)notifications completion:(DNCompletionBlock)completionBlock;
 
 + (void)clearBrokenNotifications;
 

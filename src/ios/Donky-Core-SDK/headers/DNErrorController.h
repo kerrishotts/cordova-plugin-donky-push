@@ -20,7 +20,8 @@ typedef enum {
     DNCoreSDKSuspendedUser,
     DNCoreContentNotificationSizeLimit,
     DNCoreErrorDuplicateRequest,
-    DNCoreSDKErrorDuplicateAsyncCall
+    DNCoreSDKErrorDuplicateAsyncCall,
+    DNDonkyErrorCodeGeneric
 } DonkyNetworkSDKErrorCodes;
 
 @interface DNErrorController : NSObject
@@ -38,5 +39,7 @@ typedef enum {
 + (BOOL)serviceReturned:(NSInteger)errorCode error:(NSError *)error;
 
 + (BOOL)serviceReturnedFailureKey:(NSString *)failureValue error:(NSError *)error;
+
++ (NSString *)errorStringFromErrorUserInfo:(NSError *)error;
 
 @end

@@ -7,6 +7,8 @@
 #import "NSMutableDictionary+DNDictionary.h"
 #import <objc/runtime.h>
 
+
+
 BOOL debugEnabled = TRUE;
 #define DLog(fmt, ...) { \
 if (debugEnabled) \
@@ -19,46 +21,26 @@ NSLog((@"DonkyPlugin: " fmt), ##__VA_ARGS__); \
 @synthesize moduleDefinition;
 
 static UIWebView* webView;
-
 static bool sdkInitialised = false;
 static NSString* sdkInitError = nil;
 static bool cordovaInitialised = false;
 
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        
-        Class class = [self class];
-        
-        SEL originalSelector = @selector(initWithWebView:);
-        SEL swizzledSelector = @selector(xxx_initWithWebView:);
-        
-        Method originalMethod = class_getInstanceMethod(class, originalSelector);
-        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-        
-        BOOL didAddMethod = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
-        
-        if (didAddMethod) {
-            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-        } else {
-            method_exchangeImplementations(originalMethod, swizzledMethod);
-        }
-    });
-}
-
-- (CDVPlugin*)xxx_initWithWebView:(UIWebView*)theWebView
+- (void) pluginInitialize;
 {
-    NSLog(@"DonkyPlugin:initWithWebView");
-    CDVPlugin* this = [self xxx_initWithWebView:theWebView];
-    self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.0"];
+    NSLog(@"DonkyPlugin:pluginInitialize");
+
+    self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.1"];
     
     cordovaInitialised = true;
-    webView = theWebView;
+    
+    if (self.webViewEngine != nil) {
+        webView = (UIWebView *)self.webViewEngine.engineWebView;
+    }
+    
     if(sdkInitialised){
         NSLog(@"Donky SDK ready before Cordova");
         [[self class] notifySdkIsReady];
     }
-    return this;
 }
 
 + (void) sdkIsReady:(NSString*)errorMsg
@@ -81,7 +63,7 @@ static bool cordovaInitialised = false;
         paramString = [NSString stringWithFormat:@"false, '%@'", sdkInitError];
     }
     NSString* jsString = [NSString stringWithFormat:@"document.donkyready(%@)", paramString];
-    [webView stringByEvaluatingJavaScriptFromString:jsString];
+    [[self class] runJavaScriptCommand:jsString];
 }
 
 - (void) init:(CDVInvokedUrlCommand*)command;
@@ -306,7 +288,7 @@ static bool cordovaInitialised = false;
     }
 }
 
-- (void)getRegistrationDetails:(CDVInvokedUrlCommand*)command {
+- (NSString *)getRegistrationDetails:(CDVInvokedUrlCommand*)command {
 
     self.cordova_command = command;
     
@@ -359,7 +341,8 @@ static bool cordovaInitialised = false;
                                                              error:nil];
         
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString]];
+        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
+        return jsonString;
     }
     @catch (NSException* exception) {
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];
@@ -373,7 +356,18 @@ static bool cordovaInitialised = false;
 - (void) jsNotificationCallback:(NSString*)jsData:(NSString*)notificationType;
 {
     NSString* jsString = [NSString stringWithFormat:@"cordova.plugins.donky.core._notificationTypeCallbacks[\"%@\"](%@);", notificationType, jsData];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    [[self class] runJavaScriptCommand:jsString];
+}
+
++ (void) runJavaScriptCommand:(NSString *)jsString;
+{
+    if ([webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
+        // Cordova-iOS pre-4
+        [webView performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:jsString waitUntilDone:NO];
+    } else {
+        // Cordova-iOS 4+
+        [webView performSelectorOnMainThread:@selector(evaluateJavaScript:completionHandler:) withObject:jsString waitUntilDone:NO];
+    }
 }
  
 - (void) sendContentNotification:(DNContentNotification*)contentNotification;

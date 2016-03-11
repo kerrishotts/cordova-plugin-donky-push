@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?> 
-<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.0.9'>
-  <name>Donky Push Notifications</name>
+<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='2.0.0'>
+  <name>
+     Donky Push Notifications 
+  </name>
   <description>
      This plugin allows you to receive push notifications and interactive push
     notifications, feedback the analytics and optionally display them. Powered
@@ -96,6 +98,11 @@
     <!-- Donky Data model; due to a bug in Plugman where the .xccurrentversion file is not copied this section is currenty commented out and the data model needs manually copying! -->
     <!-- <source-file src='src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld'/> -->
     <!-- Donky Source -->
+    <info>
+       Due to Cordova not copying the hidden file .xccurrentversion please
+      manually copy the package
+      ./plugins/cordova-plugin-donky-push/src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld into the Donky plugins folder in XCode. The Xcode project can be found in ./platform/ios 
+    </info>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNDonkyNetworkDetails.h' autogen='true'/>
@@ -103,7 +110,9 @@
     <header-file src='src/ios/Donky-Core-SDK/headers/DNAccountController.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNUserAuthentication.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNAccountRegistrationResponse.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNAuthResponse.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNConfigurationController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNAuthenticationObject.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNClientDetails.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNClientDetailsHelper.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNDeviceDetails.h' autogen='true'/>
@@ -139,6 +148,7 @@
     <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkDataHelper.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNDeviceConnectivityController.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkHelper.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Core-SDK/headers/DNNetworkThread.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNRequest.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNRetryHelper.h' autogen='true'/>
     <header-file src='src/ios/Donky-Core-SDK/headers/DNRetryObject.h' autogen='true'/>
@@ -182,10 +192,6 @@
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/UIColor+DCMColour.h' autogen='true'/>
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DNResponder+FirstResponder.h' autogen='true'/>
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINotificationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIBannerView.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINotificationViewHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINotification.h' autogen='true'/>
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUILocalization+Localization.h' autogen='true'/>
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIMainController.h' autogen='true'/>
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINewBannerView.h' autogen='true'/>
@@ -197,43 +203,35 @@
     <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUITheme.h' autogen='true'/>
     <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/DRLocalization.strings' autogen='true'/>
     <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/DCUILocalization.strings' autogen='true'/>
-    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/common_messaging_default_avatar.png' autogen='true'/>
-    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/common_messaging_default_avatar@2x.png' autogen='true'/>
     <source-file framework='true' src='src/ios/Donky-CommonMessaging-UI/libPods-Donky-CommonMessaging-UI.a' autogen='true'/>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPConstants.h' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotificationControllerHelper.h' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotificationController.h' autogen='true'/>
+    <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotification.h' autogen='true'/>
     <source-file framework='true' src='src/ios/Donky-SimplePush-Logic/libPods-Donky-SimplePush-Logic.a' autogen='true'/>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
-    <framework src='AudioToolbox.framework' autogen='true'/>
-    <header-file src='src/ios/Donky-SimplePush-UI/headers/DPUIBannerView.h' autogen='true'/>
-    <header-file src='src/ios/Donky-SimplePush-UI/headers/DPUINotificationController.h' autogen='true'/>
-    <header-file src='src/ios/Donky-SimplePush-UI/headers/DPUINotification.h' autogen='true'/>
-    <resource-file src='src/ios/Donky-SimplePush-UI/resources/avatar_default.png' autogen='true'/>
-    <resource-file src='src/ios/Donky-SimplePush-UI/resources/avatar_default@2x.png' autogen='true'/>
-    <resource-file src='src/ios/Donky-SimplePush-UI/resources/avatar_default@3x.png' autogen='true'/>
-    <source-file framework='true' src='src/ios/Donky-SimplePush-UI/libPods-Donky-SimplePush-UI.a' autogen='true'/>
+    <header-file src='src/ios/Donky-Automation-Logic/headers/DATrigger.h' autogen='true'/>
+    <header-file src='src/ios/Donky-Automation-Logic/headers/DAAutomationController.h' autogen='true'/>
+    <source-file framework='true' src='src/ios/Donky-Automation-Logic/libPods-Donky-Automation-Logic.a' autogen='true'/>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='SystemConfiguration.framework' autogen='true'/>
     <framework src='Security.framework' autogen='true'/>
     <framework src='MobileCoreServices.framework' autogen='true'/>
     <framework src='CoreGraphics.framework' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFNetworking.h' autogen='true'/>
-    <header-file src='src/ios/AFNetworking/headers/AFURLConnectionOperation.h' autogen='true'/>
-    <header-file src='src/ios/AFNetworking/headers/AFHTTPRequestOperation.h' autogen='true'/>
-    <header-file src='src/ios/AFNetworking/headers/AFHTTPRequestOperationManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFHTTPSessionManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLSessionManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFNetworkReachabilityManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFSecurityPolicy.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLRequestSerialization.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLResponseSerialization.h' autogen='true'/>
+    <header-file src='src/ios/AFNetworking/headers/AFAutoPurgingImageCache.h' autogen='true'/>
+    <header-file src='src/ios/AFNetworking/headers/AFImageDownloader.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFNetworkActivityIndicatorManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIActivityIndicatorView+AFNetworking.h' autogen='true'/>
-    <header-file src='src/ios/AFNetworking/headers/UIAlertView+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIButton+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIImage+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIImageView+AFNetworking.h' autogen='true'/>
@@ -245,9 +243,5 @@
     <framework src='Foundation.framework' autogen='true'/>
     <header-file src='src/ios/UIView-Autolayout/headers/UIView+AutoLayout.h' autogen='true'/>
     <source-file framework='true' src='src/ios/UIView-Autolayout/libPods-UIView-Autolayout.a' autogen='true'/>
-
-    <info>
-        Due to Cordova not copying the hidden file .xccurrentversion please manually copy the package ./plugins/cordova-plugin-donky-push/src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld into the Donky plugins folder in XCode. The Xcode project can be found in ./platform/ios
-    </info>
   </platform>
 </plugin>

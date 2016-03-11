@@ -1,6 +1,11 @@
 #!/bin/bash
 
 cd cocoapod-to-cordova
+
+cp ../Podfile.Donky-Push ./Podfile
+make build
+
+read -p "Press ENTER to continue with Donky-Core-SDK"
 cp ../Podfile.Donky-Core-SDK ./Podfile
 make build
 
@@ -20,8 +25,8 @@ read -p "Press ENTER to continue with Donky-SimplePush-Logic"
 cp ../Podfile.Donky-SimplePush-Logic ./Podfile
 make build
 
-read -p "Press ENTER to continue with Donky-SimplePush-UI"
-cp ../Podfile.Donky-SimplePush-UI ./Podfile
+read -p "Press ENTER to continue with Donky-Automation-Logic"
+cp ../Podfile.Donky-Automation-Logic ./Podfile
 make build
 
 read -p "Press ENTER to continue with AFNetworking"
