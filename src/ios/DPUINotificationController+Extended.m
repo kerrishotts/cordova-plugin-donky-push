@@ -14,7 +14,6 @@
 #import "DPUIBannerView.h"
 #import "DCMConstants.h"
 #import "DNLoggingController.h"
-#import "DCUINotificationController.h"
 
 @interface DPUINotificationControllerExtended ()
 @property(nonatomic, strong) DPPushNotificationController *pushNotificationController;
@@ -84,7 +83,7 @@
     
     [[DNDonkyCore sharedInstance] subscribeToLocalEvent:kDNDonkyEventNotificationTapped handler:[self bannerTappedHandler]];
     
-    DNModuleDefinition *simplePushUIController = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.1.2.2"];
+    DNModuleDefinition *simplePushUIController = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.1.3.0"];
     [[DNDonkyCore sharedInstance] registerModule:simplePushUIController];
     
 }
