@@ -76,6 +76,7 @@
     <source-file src='src/ios/AppDelegate+Donky.m'/>
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
+    <source-file src='src/ios/CDVUIWebViewEngine+Declaration.h'/>
     <resource-file src='src/ios/Localizable.strings'/>
     <config-file target='*-Info.plist' parent='UIBackgroundModes'>
       <array>
