@@ -25,21 +25,62 @@ static bool sdkInitialised = false;
 static NSString* sdkInitError = nil;
 static bool cordovaInitialised = false;
 
-- (void) pluginInitialize;
-{
-    NSLog(@"DonkyPlugin:pluginInitialize");
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        Class class = [self class];
+        
+        SEL originalSelector = @selector(initWithWebView:);
+        SEL swizzledSelector = @selector(xxx_initWithWebView:);
+        
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        
+        BOOL didAddMethod = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+        
+        if (didAddMethod) {
+            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
+    });
+}
 
+
+- (CDVPlugin*)xxx_initWithWebView:(UIWebView*)theWebView
+{
+    // Cordova iOS 3
+    NSLog(@"DonkyPlugin:initWithWebView");
+    CDVPlugin* this = [self xxx_initWithWebView:theWebView];
     self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.0"];
     
     cordovaInitialised = true;
-    
-    if (self.webViewEngine != nil) {
-        webView = (UIWebView *)self.webViewEngine.engineWebView;
-    }
-    
+    webView = theWebView;
     if(sdkInitialised){
         NSLog(@"Donky SDK ready before Cordova");
         [[self class] notifySdkIsReady];
+    }
+    return this;
+}
+
+- (void) pluginInitialize;
+{
+   // Check for Cordova iOS 4
+    if([self respondsToSelector:@selector(webViewEngine)]){
+        NSLog(@"DonkyPlugin:pluginInitialize - Cordova iOS4+");
+        self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.0"];
+        
+        cordovaInitialised = true;
+        
+        if (self.webViewEngine != nil) {
+            webView = (UIWebView *)self.webViewEngine.engineWebView;
+        }
+        
+        if(sdkInitialised){
+            NSLog(@"Donky SDK ready before Cordova");
+            [[self class] notifySdkIsReady];
+        }
     }
 }
 

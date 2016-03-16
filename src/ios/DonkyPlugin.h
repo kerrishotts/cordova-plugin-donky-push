@@ -7,6 +7,7 @@
 #import "DNDonkyCore.h"
 #import "DNModuleDefinition.h"
 #import "DNRegistrationDetails.h"
+#import "CDVUIWebViewEngine+Declaration.h"
 
 @interface DonkyPlugin :CDVPlugin {
     CDVInvokedUrlCommand* cordova_command;
@@ -24,6 +25,7 @@
 + (void) notifySdkIsReady;
 - (CDVPlugin*)xxx_initWithWebView:(UIWebView*)theWebView;
 - (void) init:(CDVInvokedUrlCommand*)command;
+- (CDVUIWebViewEngine*) webViewEngine;
 
 - (void) updateUserDetails:(CDVInvokedUrlCommand*)command;
 - (void) updateDeviceDetails:(CDVInvokedUrlCommand*)command;
