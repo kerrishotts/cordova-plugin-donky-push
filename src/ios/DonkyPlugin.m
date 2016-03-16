@@ -29,7 +29,7 @@ static bool cordovaInitialised = false;
 {
     NSLog(@"DonkyPlugin:pluginInitialize");
 
-    self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.1"];
+    self.moduleDefinition = [[DNModuleDefinition alloc] initWithName:NSStringFromClass([self class]) version:@"1.0"];
     
     cordovaInitialised = true;
     
@@ -288,7 +288,7 @@ static bool cordovaInitialised = false;
     }
 }
 
-- (NSString *)getRegistrationDetails:(CDVInvokedUrlCommand*)command {
+- (void) getRegistrationDetails:(CDVInvokedUrlCommand*)command {
 
     self.cordova_command = command;
     
@@ -341,8 +341,7 @@ static bool cordovaInitialised = false;
                                                              error:nil];
         
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]];
-        return jsonString;
+        [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString]];
     }
     @catch (NSException* exception) {
         [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason]];

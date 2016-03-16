@@ -1,6 +1,6 @@
 platform :ios, '7.0'
 
-pod 'AFNetworking'
+pod 'AFNetworking', '~> 2.6.3'
 
 post_install do |installer|
   require './cocoapod-to-cordova'

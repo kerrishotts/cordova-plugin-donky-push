@@ -9,16 +9,11 @@ read -p "Press ENTER to continue with Donky-Core-SDK"
 cp ../Podfile.Donky-Core-SDK ./Podfile
 make build
 
-# Not working and maybe not necessary
-#read -p "Press ENTER to continue with data model copy"
-#cp -R Pods/Donky-Core-SDK/src/modules/Core/Data\ Controller/Resources/DNDonkyDataModel.xcdatamodeld/ ../../../../src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld/
+read -p "Press ENTER to continue with data model copy"
+cp -R "Pods/Donky-Core-SDK/src/modules/Core/Data Controller/Resources/DNDonkyDataModel.xcdatamodeld" ../../../../src/ios/Donky-Core-SDK/resources/DNDonkyDataModel.xcdatamodeld
 
 read -p "Press ENTER to continue with Donky-CommonMessaging-Logic"
 cp ../Podfile.Donky-CommonMessaging-Logic ./Podfile
-make build
-
-read -p "Press ENTER to continue with Donky-CommonMessaging-UI"
-cp ../Podfile.Donky-CommonMessaging-UI ./Podfile
 make build
 
 read -p "Press ENTER to continue with Donky-SimplePush-Logic"

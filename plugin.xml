@@ -185,27 +185,6 @@
     <source-file framework='true' src='src/ios/Donky-CommonMessaging-Logic/libPods-Donky-CommonMessaging-Logic.a' autogen='true'/>
     <framework src='Foundation.framework' autogen='true'/>
     <framework src='UIKit.framework' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIActionHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIAlertHelper.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIAvatarImageView.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/NSDate+DCMDate.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/UIColor+DCMColour.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DNResponder+FirstResponder.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUILocalization+Localization.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIMainController.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUINewBannerView.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DRichMessage+Localization.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DRUITheme.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DRUIThemeConstants.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUISplitViewController.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUIThemeController.h' autogen='true'/>
-    <header-file src='src/ios/Donky-CommonMessaging-UI/headers/DCUITheme.h' autogen='true'/>
-    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/DRLocalization.strings' autogen='true'/>
-    <resource-file src='src/ios/Donky-CommonMessaging-UI/resources/DCUILocalization.strings' autogen='true'/>
-    <source-file framework='true' src='src/ios/Donky-CommonMessaging-UI/libPods-Donky-CommonMessaging-UI.a' autogen='true'/>
-    <framework src='Foundation.framework' autogen='true'/>
-    <framework src='UIKit.framework' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPConstants.h' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotificationControllerHelper.h' autogen='true'/>
     <header-file src='src/ios/Donky-SimplePush-Logic/headers/DPPushNotificationController.h' autogen='true'/>
@@ -222,16 +201,18 @@
     <framework src='MobileCoreServices.framework' autogen='true'/>
     <framework src='CoreGraphics.framework' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFNetworking.h' autogen='true'/>
+    <header-file src='src/ios/AFNetworking/headers/AFURLConnectionOperation.h' autogen='true'/>
+    <header-file src='src/ios/AFNetworking/headers/AFHTTPRequestOperation.h' autogen='true'/>
+    <header-file src='src/ios/AFNetworking/headers/AFHTTPRequestOperationManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFHTTPSessionManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLSessionManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFNetworkReachabilityManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFSecurityPolicy.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLRequestSerialization.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFURLResponseSerialization.h' autogen='true'/>
-    <header-file src='src/ios/AFNetworking/headers/AFAutoPurgingImageCache.h' autogen='true'/>
-    <header-file src='src/ios/AFNetworking/headers/AFImageDownloader.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/AFNetworkActivityIndicatorManager.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIActivityIndicatorView+AFNetworking.h' autogen='true'/>
+    <header-file src='src/ios/AFNetworking/headers/UIAlertView+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIButton+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIImage+AFNetworking.h' autogen='true'/>
     <header-file src='src/ios/AFNetworking/headers/UIImageView+AFNetworking.h' autogen='true'/>
