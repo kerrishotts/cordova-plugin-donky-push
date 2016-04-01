@@ -4,6 +4,7 @@
 #import "DPUINotificationController+Extended.h"
 #import "DCAAnalyticsController.h"
 #import "DonkyPlugin.h"
+#import "DCMConstants.h"
 
 @implementation AppDelegate (Donky)
 
@@ -31,9 +32,41 @@
 
 - (BOOL) xxx_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"AppDelegate(Donky):didFinishLaunchingWithOptions");
+    if([self respondsToSelector:@selector(beforeInitDonky)]){
+        [self beforeInitDonky];
+    }
+    
+    // Add support for deep links
+    [[DNDonkyCore sharedInstance] subscribeToLocalEvent:kDNDonkyEventNotificationTapped handler:^(DNLocalEvent *event) {
+        NSDictionary *eventData = [event data];
+        NSDictionary *userTapped = eventData[@"UserTapped"];
+        NSDictionary *buttonAction = userTapped[@"ButtonAction"];
+        
+        if([buttonAction[@"actionType"] isEqualToString:@"DeepLink"])
+        {
+            NSString *linkValue = buttonAction[@"data"];
+            [self handleDeepLink:linkValue];
+        }
+    }];
+    
     [self initDonky];
     return [self xxx_application:application didFinishLaunchingWithOptions:launchOptions];
-    
+}
+
+- (void)handleDeepLink:(NSString*)linkValue
+{
+    if(linkValue != nil && ![linkValue isKindOfClass:[NSNull class]])
+    {
+        if([self respondsToSelector:@selector(didReceiveLinkFromInteractiveNotification:)])
+        {
+            NSLog(@"Calling didReceiveLinkFromInteractiveNotification with value: %@", linkValue);
+            [self didReceiveLinkFromInteractiveNotification:linkValue];
+        }
+        else
+        {
+            NSLog(@"AppDelegate does not implement didReceiveLinkFromInteractiveNotification so link will not be processed.");
+        }
+    }
 }
 
 - (void)initDonky;
