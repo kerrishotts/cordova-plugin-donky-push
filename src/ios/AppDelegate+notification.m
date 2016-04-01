@@ -32,7 +32,8 @@
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 {
     NSLog(@"handleActionWithIdentifier with userInfo: %@", userInfo);
-    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *string) {
+    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
+        [self handleDeepLink:linkToOpen];
         completionHandler();
     }];
 }
