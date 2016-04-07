@@ -20,10 +20,12 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     NSLog(@"didReceiveRemoteNotification with userInfo: %@", userInfo);
-    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:nil completionHandler:^(NSString *string) {
+    
+    NSString *identifier = [userInfo[@"inttype"] isEqualToString:@"OneButton"] ? userInfo[@"lbl1"] : nil;
+    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
+        [self handleDeepLink:linkToOpen];
         completionHandler(UIBackgroundFetchResultNewData);
         [[DNNetworkController sharedInstance] synchronise];
-        
     }];
 }
 
