@@ -550,9 +550,13 @@ Example usage:
     );
 
 ## Deep Link support on iOS
-On iOS, the SDK requires you to manually handle deep links when using interactive notifications.  If you are using
-interactive push and specify a link in the action details, whether this is done on the native iOS interactive notification
-or in-app using the Donky UI for the notification, the didReceiveLinkFromInteractiveNotification method on your appdelegate will be invoked, if implemented.
+On iOS, handling of deep links varies depending on the scheme used.  For custom schemes that the app is registered to handle, deep
+links in interactive notificaitons will be opened automatically.
+
+HTTP-based links (http or https scheme) that your app is registered to handle will not be opened automatically
+as by default iOS will launch Safari for these.  For these, and for links that use a scheme registered to a different
+app, you must implement the didReceiveLinkFromInteractiveNotification method on your appdelegate which will be invoked 
+when an appropriate link is detected.
 
 From here, you can choose to load the required view or invoke any other custom logic within your application as required.
 
