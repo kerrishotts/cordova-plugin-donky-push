@@ -65,7 +65,7 @@
         }
         else
         {
-            NSLog(@"handleDeepLink: Opening non-HTTP link directly: %@", linkValue);
+            NSLog(@"handleDeepLink: Opening link: %@", linkValue);
             [[UIApplication sharedApplication] openURL:url];
         }
     }
