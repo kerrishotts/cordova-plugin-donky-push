@@ -550,15 +550,9 @@ Example usage:
     );
 
 ## Deep Link support on iOS
-On iOS, handling of deep links varies depending on the scheme used.  For custom schemes that the app is registered to handle, deep
-links in interactive notificaitons will be opened automatically.
-
-HTTP-based links (http or https scheme) that your app is registered to handle will not be opened automatically
-as by default iOS will launch Safari for these.  For these, and for links that use a scheme registered to a different
-app, you must implement the didReceiveLinkFromInteractiveNotification method on your appdelegate which will be invoked 
-when an appropriate link is detected.
-
-From here, you can choose to load the required view or invoke any other custom logic within your application as required.
+By default, deep links will open automatically.  However, you can override the functionality by supplying an implementation of the method
+didReceiveLinkFromInteractiveNotification in your AppDelegate.  From here, you can choose to load the required view or invoke any other
+custom logic within your application as required.
 
 Example AppDelegate:
 ````
