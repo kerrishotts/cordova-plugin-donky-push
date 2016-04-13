@@ -57,14 +57,16 @@
 {
     if(linkValue != nil && ![linkValue isKindOfClass:[NSNull class]])
     {
+        NSURL *url = [NSURL URLWithString:linkValue];
         if([self respondsToSelector:@selector(didReceiveLinkFromInteractiveNotification:)])
         {
-            NSLog(@"Calling didReceiveLinkFromInteractiveNotification with value: %@", linkValue);
+            NSLog(@"handleDeepLink: Calling didReceiveLinkFromInteractiveNotification with value: %@", linkValue);
             [self didReceiveLinkFromInteractiveNotification:linkValue];
         }
         else
         {
-            NSLog(@"AppDelegate does not implement didReceiveLinkFromInteractiveNotification so link will not be processed.");
+            NSLog(@"handleDeepLink: Opening link: %@", linkValue);
+            [[UIApplication sharedApplication] openURL:url];
         }
     }
 }
