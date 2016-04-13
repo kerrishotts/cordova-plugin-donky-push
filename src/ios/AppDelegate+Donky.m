@@ -58,24 +58,15 @@
     if(linkValue != nil && ![linkValue isKindOfClass:[NSNull class]])
     {
         NSURL *url = [NSURL URLWithString:linkValue];
-
-        // HTTP links shouldn't be opened directly, they will open in Safari even if registered to this app.  Other schemes can be opened automatically.
-        BOOL isHttpLink = [[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"];
-        if(!isHttpLink && [[UIApplication sharedApplication] canOpenURL:url]){
+        if([self respondsToSelector:@selector(didReceiveLinkFromInteractiveNotification:)])
+        {
+            NSLog(@"handleDeepLink: Calling didReceiveLinkFromInteractiveNotification with value: %@", linkValue);
+            [self didReceiveLinkFromInteractiveNotification:linkValue];
+        }
+        else
+        {
             NSLog(@"handleDeepLink: Opening non-HTTP link directly: %@", linkValue);
             [[UIApplication sharedApplication] openURL:url];
-        }
-        else{
-            // Link is HTTP or belongs to another app.  Require integrator intervention.
-            if([self respondsToSelector:@selector(didReceiveLinkFromInteractiveNotification:)])
-            {
-                NSLog(@"handleDeepLink: Calling didReceiveLinkFromInteractiveNotification with value: %@", linkValue);
-                [self didReceiveLinkFromInteractiveNotification:linkValue];
-            }
-            else
-            {
-                NSLog(@"handleDeepLink: AppDelegate does not implement didReceiveLinkFromInteractiveNotification so link will not be processed.");
-            }
         }
     }
 }

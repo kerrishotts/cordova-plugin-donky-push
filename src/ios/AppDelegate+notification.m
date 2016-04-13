@@ -21,9 +21,15 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     NSLog(@"didReceiveRemoteNotification with userInfo: %@", userInfo);
     
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    BOOL wasLaunchedFromNotification = (state == UIApplicationStateInactive);
+    
     NSString *identifier = [userInfo[@"inttype"] isEqualToString:@"OneButton"] ? userInfo[@"lbl1"] : nil;
     [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
-        [self handleDeepLink:linkToOpen];
+        if(wasLaunchedFromNotification)
+        {
+            [self handleDeepLink:linkToOpen];
+        }
         completionHandler(UIBackgroundFetchResultNewData);
         [[DNNetworkController sharedInstance] synchronise];
     }];

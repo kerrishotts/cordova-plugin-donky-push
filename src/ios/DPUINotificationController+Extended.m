@@ -11,7 +11,7 @@
 #import "DNConstants.h"
 #import "DNDonkyCore.h"
 #import "NSDate+DNDateHelper.h"
-#import "DPUIBannerView.h"
+#import "DPUIBannerView+Extended.h"
 #import "DCMConstants.h"
 #import "DNLoggingController.h"
 
@@ -128,7 +128,7 @@
     if (!duplicate && !messageExpired) {
         
         DPUINotification *donkyNotification = [[DPUINotification alloc] initWithNotification:notification];
-        DPUIBannerView *bannerView = [[DPUIBannerView alloc] initWithNotification:donkyNotification];
+        DPUIBannerViewExtended *bannerView = [[DPUIBannerViewExtended alloc] initWithNotification:donkyNotification];
         [[self notificationController] presentNotification:bannerView];
         
         if ([self shouldPlayAudio]) {
