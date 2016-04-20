@@ -77,6 +77,27 @@
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
     <source-file src='src/ios/CDVUIWebViewEngine+Declaration.h'/>
+    <resource-file src='src/ios/Push-UI/BannerView/Assets/common_messaging_default_avatar.png'/>
+    <resource-file src='src/ios/Push-UI/BannerView/Assets/common_messaging_default_avatar@2x.png'/>
+    <source-file src='src/ios/Push-UI/BannerView/Controller/DCUINotificationController.h'/>
+    <source-file src='src/ios/Push-UI/BannerView/Controller/DCUINotificationController.m'/>
+    <source-file src='src/ios/Push-UI/BannerView/Helper/DCUINotificationViewHelper.h'/>
+    <source-file src='src/ios/Push-UI/BannerView/Helper/DCUINotificationViewHelper.m'/>
+    <source-file src='src/ios/Push-UI/BannerView/Notification/DCUINotification.h'/>
+    <source-file src='src/ios/Push-UI/BannerView/Notification/DCUINotification.m'/>
+    <source-file src='src/ios/Push-UI/BannerView/DCUIBannerView.h'/>
+    <source-file src='src/ios/Push-UI/BannerView/DCUIBannerView.m'/>
+    <source-file src='src/ios/Push-UI/DCUIMainController.h'/>
+    <source-file src='src/ios/Push-UI/DCUIMainController.m'/>
+    <source-file src='src/ios/Push-UI/DCUILocalization+Localization.h'/>
+    <source-file src='src/ios/Push-UI/DCUILocalization+Localization.m'/>
+    <resource-file src='src/ios/Push-UI/DCUILocalization.strings'/>
+    <source-file src='src/ios/Push-UI/DPUIBannerView+Extended.h'/>
+    <source-file src='src/ios/Push-UI/DPUIBannerView+Extended.m'/>
+    <source-file src='src/ios/Push-UI/DPUINotification.h'/>
+    <source-file src='src/ios/Push-UI/DPUINotification.m'/>
+    <source-file src='src/ios/Push-UI/DPUINotificationController+Extended.h'/>
+    <source-file src='src/ios/Push-UI/DPUINotificationController+Extended.m'/>
     <resource-file src='src/ios/Localizable.strings'/>
     <config-file target='*-Info.plist' parent='UIBackgroundModes'>
       <array>

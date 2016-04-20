@@ -2,6 +2,7 @@
 #import "AppDelegate+notification.h"
 #import "DNNotificationController.h"
 #import "DNNetworkController.h"
+#import "DPUINotificationController+Extended.h"
 #import <objc/runtime.h>
 
 
@@ -20,10 +21,24 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     NSLog(@"didReceiveRemoteNotification with userInfo: %@", userInfo);
-    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:nil completionHandler:^(NSString *string) {
+    
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    BOOL wasLaunchedFromNotification = (state == UIApplicationStateInactive);
+    NSString *notificationId = userInfo[@"notificationId"];
+    
+    if(wasLaunchedFromNotification && notificationId)
+    {
+        [[DPUINotificationControllerExtended sharedInstance] wasLaunchedFromNotificationId:notificationId];
+    }
+    
+    NSString *identifier = [userInfo[@"inttype"] isEqualToString:@"OneButton"] ? userInfo[@"lbl1"] : nil;
+    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
+        if(wasLaunchedFromNotification)
+        {
+            [self handleDeepLink:linkToOpen];
+        }
         completionHandler(UIBackgroundFetchResultNewData);
         [[DNNetworkController sharedInstance] synchronise];
-        
     }];
 }
 
@@ -32,8 +47,19 @@
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 {
     NSLog(@"handleActionWithIdentifier with userInfo: %@", userInfo);
-    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *string) {
-        completionHandler();
+    
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    BOOL wasLaunchedFromNotification = (state == UIApplicationStateInactive);
+    NSString *notificationId = userInfo[@"notificationId"];
+    
+    if(wasLaunchedFromNotification && notificationId)
+    {
+        [[DPUINotificationControllerExtended sharedInstance] wasLaunchedFromNotificationId:notificationId];
+    }
+
+    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
+        [self handleDeepLink:linkToOpen];
+        completionHandler(UIBackgroundFetchResultNewData);
     }];
 }
 

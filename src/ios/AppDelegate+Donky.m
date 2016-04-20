@@ -1,10 +1,10 @@
 #import "AppDelegate+Donky.h"
 #import <objc/runtime.h>
 #import "DNDonkyCore.h"
-// BM: WIP #import "DPUINotificationController.h"
-#import "DPPushNotificationController.h"
+#import "DPUINotificationController+Extended.h"
 #import "DCAAnalyticsController.h"
 #import "DonkyPlugin.h"
+#import "DCMConstants.h"
 
 @implementation AppDelegate (Donky)
 
@@ -32,9 +32,43 @@
 
 - (BOOL) xxx_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"AppDelegate(Donky):didFinishLaunchingWithOptions");
+    if([self respondsToSelector:@selector(beforeInitDonky)]){
+        [self beforeInitDonky];
+    }
+    
+    // Add support for deep links
+    [[DNDonkyCore sharedInstance] subscribeToLocalEvent:kDNDonkyEventNotificationTapped handler:^(DNLocalEvent *event) {
+        NSDictionary *eventData = [event data];
+        NSDictionary *userTapped = eventData[@"UserTapped"];
+        NSDictionary *buttonAction = userTapped[@"ButtonAction"];
+        
+        if([buttonAction[@"actionType"] isEqualToString:@"DeepLink"])
+        {
+            NSString *linkValue = buttonAction[@"data"];
+            [self handleDeepLink:linkValue];
+        }
+    }];
+    
     [self initDonky];
     return [self xxx_application:application didFinishLaunchingWithOptions:launchOptions];
-    
+}
+
+- (void)handleDeepLink:(NSString*)linkValue
+{
+    if(linkValue != nil && ![linkValue isKindOfClass:[NSNull class]])
+    {
+        NSURL *url = [NSURL URLWithString:linkValue];
+        if([self respondsToSelector:@selector(didReceiveLinkFromInteractiveNotification:)])
+        {
+            NSLog(@"handleDeepLink: Calling didReceiveLinkFromInteractiveNotification with value: %@", linkValue);
+            [self didReceiveLinkFromInteractiveNotification:linkValue];
+        }
+        else
+        {
+            NSLog(@"handleDeepLink: Opening link: %@", linkValue);
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
 }
 
 - (void)initDonky;
@@ -44,13 +78,8 @@
     NSLog(@"Start Donky analytics controller");
     [[DCAAnalyticsController sharedInstance] start];
     
-    // BM: WIP removing UI
-    //NSLog(@"Start Donky push UI controller");
-    //[[DPUINotificationController sharedInstance] start];
-    
-    //Start the push logic controller:
-    NSLog(@"Start Donky Push controller");
-    [[DPPushNotificationController sharedInstance] start];
+    NSLog(@"Start Donky push UI controller");
+    [[DPUINotificationControllerExtended sharedInstance] start];
     
     NSString* apiKey = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"DonkyApiKey"] objectAtIndex:0];
     
