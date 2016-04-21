@@ -3,6 +3,7 @@
 #import "DNNotificationController.h"
 #import "DNNetworkController.h"
 #import "DPUINotificationController+Extended.h"
+#import "DNNotificationControllerExtended.h"
 #import <objc/runtime.h>
 
 
@@ -32,7 +33,7 @@
     }
     
     NSString *identifier = [userInfo[@"inttype"] isEqualToString:@"OneButton"] ? userInfo[@"lbl1"] : nil;
-    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
+    [DNNotificationControllerExtended didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
         if(wasLaunchedFromNotification)
         {
             [self handleDeepLink:linkToOpen];
@@ -57,7 +58,7 @@
         [[DPUINotificationControllerExtended sharedInstance] wasLaunchedFromNotificationId:notificationId];
     }
 
-    [DNNotificationController didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
+    [DNNotificationControllerExtended didReceiveNotification:userInfo handleActionIdentifier:identifier completionHandler:^(NSString *linkToOpen) {
         [self handleDeepLink:linkToOpen];
         completionHandler(UIBackgroundFetchResultNewData);
     }];

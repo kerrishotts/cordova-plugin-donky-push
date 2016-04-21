@@ -74,6 +74,8 @@
     <source-file src='src/ios/AppDelegate+Donky.m'/>
     <source-file src='src/ios/AppDelegate+notification.h'/>
     <source-file src='src/ios/AppDelegate+notification.m'/>
+    <source-file src='src/ios/DNNotificationControllerExtended.h'/>
+    <source-file src='src/ios/DNNotificationControllerExtended.m'/>
     <source-file src='src/ios/DPUINotificationController+Extended.h'/>
     <source-file src='src/ios/DPUINotificationController+Extended.m'/>
     <source-file src='src/ios/DPUIBannerView+Extended.h'/>

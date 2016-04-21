@@ -181,8 +181,6 @@ static NSString *const DPUIButtonSetInteractionType = @"interactionType";
         timeToInteract = 0;
     
     [params dnSetObject:@(timeToInteract) forKey:@"timeToInteractionSeconds"];
-    
-    [params dnSetObject:[buttonSetAction count] == 2 ? @"twoButton" : @"oneButton" forKey:@"interactionType"];
 
     [params dnSetObject:[[self notification] contextItems] forKey:@"contextItems"];
 
