@@ -65,4 +65,6 @@
 
 - (void)setNotificationController:(DCUINotificationController *)controller;
 
+-(void)wasLaunchedFromNotificationId:(NSString *)notificationId;
+
 @end

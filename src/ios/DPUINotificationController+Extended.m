@@ -21,6 +21,7 @@
 @property(nonatomic, strong ) DNLocalEventHandler pushReceivedHandler;
 @property(nonatomic, strong) DNLocalEventHandler bannerTappedHandler;
 @property(nonatomic, strong) DNServerNotification *previousNotification;
+@property(nonatomic, strong) NSString *launchedFromNotificationId;
 @end
 
 @implementation DPUINotificationControllerExtended
@@ -107,13 +108,18 @@
     
     __block BOOL duplicate = NO;
     
+    DNServerNotification *notification = notificationData[kDNDonkyNotificationSimplePush];
+
     NSString *backgroundNotification = notificationData[@"PendingPushNotifications"];
     
     if ([backgroundNotification isEqualToString:[[self previousNotification] serverNotificationID]]) {
         duplicate = YES;
     }
-
-    DNServerNotification *notification = notificationData[kDNDonkyNotificationSimplePush];
+    
+    if([self launchedFromNotificationId] != nil
+       && [[self launchedFromNotificationId] isEqualToString:notification.serverNotificationID]){
+        duplicate = YES;
+    }
     
     // Keep a copy of the current notification for the duplicate check
     [self setPreviousNotification:notificationData[kDNDonkyNotificationSimplePush]];
@@ -156,6 +162,10 @@
                                                                    timeStamp:[NSDate date]
                                                                         data:@(currentCount)];
     [[DNDonkyCore sharedInstance] publishEvent:changeBadgeEvent];
+}
+
+- (void)wasLaunchedFromNotificationId:(NSString *)notificationId {
+    [self setLaunchedFromNotificationId:notificationId];
 }
 
 @end
