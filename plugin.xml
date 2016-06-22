@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?> 
-<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.1.2'>
+<plugin xmlns='http://www.phonegap.com/ns/plugins/1.0' xmlns:android='http://schemas.android.com/apk/res/android' id='cordova-plugin-donky-push' version='1.1.3'>
   <name>Donky Push Notifications</name>
   <description>
      This plugin allows you to receive push notifications and interactive push
@@ -53,10 +53,10 @@
     <config-file target='AndroidManifest.xml' parent='/manifest/application'>
       <service android:name='net.donky.core.messaging.push.logic.PushLogicIntentService' android:exported='false'/>
     </config-file>
-    <framework src='net.donky:donky-core:2.2.0.3'/>
-    <framework src='net.donky:donky-module-analytics:2.2.0.3'/>
-    <framework src='net.donky:donky-module-push-logic:2.2.0.3'/>
-    <framework src='net.donky:donky-module-push-ui:2.2.0.3'/>
+    <framework src='net.donky:donky-core:+'/>
+    <framework src='net.donky:donky-module-analytics:+'/>
+    <framework src='net.donky:donky-module-push-logic:+'/>
+    <framework src='net.donky:donky-module-push-ui:+'/>
     <framework src='com.android.support:appcompat-v7:22.2.1'/>
     <framework src='com.google.android.gms:play-services-gcm:+'/>
   </platform>
