@@ -445,6 +445,10 @@ static bool cordovaInitialised = false;
     if([oUserDetails valueForKey:@"userId"] != NULL){
        userId = [oUserDetails valueForKey:@"userId"];
     }
+    else if([oUserDetails valueForKey:@"userID"] != NULL){
+        userId = [oUserDetails valueForKey:@"userID"];
+    }
+    
     if([oUserDetails valueForKey:@"displayName"] != NULL){
        displayName = [oUserDetails valueForKey:@"displayName"];
     }
