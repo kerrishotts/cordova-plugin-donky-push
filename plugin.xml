@@ -80,6 +80,8 @@
     <source-file src='src/ios/DPUINotificationController+Extended.m'/>
     <source-file src='src/ios/DPUIBannerView+Extended.h'/>
     <source-file src='src/ios/DPUIBannerView+Extended.m'/>
+    <source-file src='src/ios/DNRetryHelper+Patch.h'/>
+    <source-file src='src/ios/DNRetryHelper+Patch.m'/>
     <source-file src='src/ios/CDVUIWebViewEngine+Declaration.h'/>
     <resource-file src='src/ios/Localizable.strings'/>
     <config-file target='*-Info.plist' parent='UIBackgroundModes'>
